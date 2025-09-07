@@ -1,0 +1,100 @@
+<div class="bg-white p-8 min-h-screen" [dir]="isRTL() ? 'rtl' : 'ltr'">
+  <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-2xl p-10">
+    <!-- Header -->
+    <h1 class="text-pink-500 font-bold text-2xl tracking-widest mb-8">
+      {{ 'CONTACT_US' | translate }}
+    </h1>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      
+      <!-- Left Side - Contact Info -->
+      <div class="space-y-8" [class.text-right]="isRTL()">
+        <!-- Call Anytime -->
+        <div class="flex items-center p-4 rounded-lg shadow-sm shadow-pink-200/30 hover:shadow-md hover:shadow-pink-200/40 transition-shadow duration-300"
+             [class.space-x-4]="!isRTL()" 
+             [class.space-x-reverse]="isRTL()" 
+             [class.flex-row-reverse]="isRTL()">
+          <div class="flex-shrink-0 w-16 h-16 bg-pink-50 rounded-2xl flex items-center justify-center border border-pink-200 shadow-sm shadow-pink-200/40">
+            <i class="fas fa-phone-alt text-pink-500 text-2xl"></i>
+          </div>
+          <div>
+            <h3 class="text-pink-500 font-bold text-xl mb-1">{{ 'CALL_ANYTIME' | translate }}</h3>
+            <p class="text-gray-700 text-base">241-373-2123</p>
+          </div>
+        </div>
+        
+        <!-- Send Email -->
+        <div class="flex items-center p-4 rounded-lg shadow-sm shadow-pink-200/30 hover:shadow-md hover:shadow-pink-200/40 transition-shadow duration-300"
+             [class.space-x-4]="!isRTL()" 
+             [class.space-x-reverse]="isRTL()" 
+             [class.flex-row-reverse]="isRTL()">
+          <div class="flex-shrink-0 w-16 h-16 bg-pink-50 rounded-2xl flex items-center justify-center border border-pink-200 shadow-sm shadow-pink-200/40">
+            <i class="fas fa-envelope text-pink-500 text-2xl"></i>
+          </div>
+          <div>
+            <h3 class="text-pink-500 font-bold text-xl mb-1">{{ 'SEND_EMAIL' | translate }}</h3>
+            <p class="text-gray-700 text-base">Dwight63gmail.com</p>
+          </div>
+        </div>
+        
+        <!-- Visit Us -->
+        <div class="flex items-center p-4 rounded-lg shadow-sm shadow-pink-200/30 hover:shadow-md hover:shadow-pink-200/40 transition-shadow duration-300"
+             [class.space-x-4]="!isRTL()" 
+             [class.space-x-reverse]="isRTL()" 
+             [class.flex-row-reverse]="isRTL()">
+          <div class="flex-shrink-0 w-16 h-16 bg-pink-50 rounded-2xl flex items-center justify-center border border-pink-200 shadow-sm shadow-pink-200/40">
+            <i class="fas fa-map-marker-alt text-pink-500 text-2xl"></i>
+          </div>
+          <div>
+            <h3 class="text-pink-500 font-bold text-xl mb-1">{{ 'VISIT_US' | translate }}</h3>
+            <p class="text-gray-700 text-base" style="white-space: pre-line;">{{ 'OFFICE_ADDRESS' | translate }}</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Side - Contact Form -->
+      <div class="shadow-sm shadow-pink-200/20 p-2 rounded-lg">
+        <form (ngSubmit)="contactSubmit()" [formGroup]="contactForm" class="space-y-6">
+          <!-- Name Field -->
+          <input type="text" 
+                 [placeholder]="'NAME_PLACEHOLDER' | translate" 
+                 formControlName="name" 
+                 class="w-full px-4 py-4 border border-pink-400 rounded-[12px] focus:outline-none focus:border-pink-500 shadow-sm shadow-pink-200/30 transition duration-300 text-pink-500 placeholder:text-pink-400"
+                 [class.text-right]="isRTL()">
+
+          <!-- Email Field -->
+          <input type="email" 
+                 [placeholder]="'EMAIL_PLACEHOLDER' | translate" 
+                 formControlName="email" 
+                 class="w-full px-4 py-4 border border-pink-400 rounded-[12px] focus:outline-none focus:border-pink-500 shadow-sm shadow-pink-200/30 transition duration-300 text-pink-500 placeholder:text-pink-400"
+                 [class.text-right]="isRTL()">
+
+          <!-- Phone Field -->
+          <input type="tel" 
+                 [placeholder]="'PHONE_PLACEHOLDER' | translate" 
+                 formControlName="phone" 
+                 class="w-full px-4 py-4 border border-pink-400 rounded-[12px] focus:outline-none focus:border-pink-500 shadow-sm shadow-pink-200/30 transition duration-300 text-pink-500 placeholder:text-pink-400"
+                 [class.text-right]="isRTL()">
+
+          <!-- Message Field -->
+          <textarea [placeholder]="'MESSAGE_PLACEHOLDER' | translate" 
+                    formControlName="message" 
+                    rows="8" 
+                    class="w-full px-4 py-4 border border-pink-400 rounded-[12px] focus:outline-none focus:border-pink-500 shadow-sm shadow-pink-200/30 resize-none transition duration-300 text-pink-500 placeholder:text-pink-400"
+                    [class.text-right]="isRTL()"></textarea>
+
+          <!-- Submit Button -->
+          <div class="flex" [class.justify-end]="!isRTL()" [class.justify-start]="isRTL()">
+            <button type="submit" 
+                    class="bg-pink-500 hover:bg-pink-600 text-white font-bold px-8 py-4 rounded-[28px] shadow-sm shadow-pink-300/40 transition-all duration-300 hover:shadow-md hover:shadow-pink-300/50 flex items-center"
+                    [class.space-x-2]="!isRTL()" 
+                    [class.space-x-reverse]="isRTL()">
+              <span>{{ 'SEND' | translate }}</span>
+              <i class="fas" [class.fa-arrow-right]="!isRTL()" [class.fa-arrow-left]="isRTL()"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+// Ensure overlay always covers everything
+.overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+  transition: opacity 0.3s ease-in-out;
+}
+
+// Sidebar specific styles
+#logo-sidebar {
+  // Custom scrollbar
+  scrollbar-width: thin;
+  scrollbar-color: rgba(236, 72, 153, 0.3) transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(236, 72, 153, 0.3);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(236, 72, 153, 0.5);
+  }
+}
+
+// Prevent any content from showing above the sidebar
+@media (max-width: 639px) {
+  body.sidebar-open {
+    overflow: hidden !important;
+    position: relative !important;
+  }
+  
+  html.sidebar-open {
+    overflow: hidden !important;
+  }
+
+  // Ensure sidebar is always above everything else on mobile
+  #logo-sidebar {
+    z-index: 1050 !important;
+  }
+}
+
+// Focus states for accessibility
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid rgba(236, 72, 153, 0.5);
+  outline-offset: 2px;
+}
+
+// Animation improvements
+.transition-transform {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

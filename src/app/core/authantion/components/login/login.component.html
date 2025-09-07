@@ -1,0 +1,104 @@
+
+<div class="py-3">
+<div
+  *ngIf="successMessage"
+  class="flex items-center p-3 mb-4 text-sm text-green-800 rounded-lg bg-green-50 border border-green-300"
+  role="alert"
+>
+  <svg class="w-4 h-4 me-2 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+    <path
+      fill-rule="evenodd"
+      d="M16.707 5.293a1 1 0 00-1.414 0L9 11.586 5.707 8.293a1 1 0 10-1.414 1.414l4 4a1 1 0 001.414 0l7-7a1 1 0 000-1.414z"
+      clip-rule="evenodd"
+    />
+  </svg>
+  <span class="font-medium">{{ successMessage }}</span>
+</div>
+
+
+
+<form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
+ 
+  
+    <div class="mb-8 relative w-full">
+      <input formControlName="email" type="email" id="email"
+        [ngClass]="{
+          'border-[#E0E0E9]': !loginForm.get('email')?.touched,
+          'border-red-500 focus:border-red-500': loginForm.get('email')?.touched && loginForm.get('email')?.invalid,
+          'border-green-500 focus:border-green-500': loginForm.get('email')?.touched && loginForm.get('email')?.valid
+        }"
+        class="lg:w-[410px] w-full shadow-[0px_10.09px_20.18px_0px_rgba(68,97,242,0.05)] rounded-custom2 border-0.99  h-[55px] pr-12 focus:outline-none transition-colors duration-200"
+        placeholder="Email" required />
+      <div *ngIf="loginForm.get('email')?.touched">
+        <div *ngIf="loginForm.get('email')?.hasError('required')" class="flex items-center p-2 pe-1 mb-2 text-xs text-red-800 rounded-custom2 bg-red-50 border border-red-300 lg:w-[410px] w-full" style="height:38px;">
+          <svg class="shrink-0 inline w-3 h-3 me-2 text-red-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+          </svg>
+          <span class="sr-only">Info</span>
+          <div><span class="font-medium">Error!</span> Email is required</div>
+        </div>
+        <div *ngIf="loginForm.get('email')?.hasError('email') && !loginForm.get('email')?.hasError('required')" class="flex items-center p-2 pe-1 mb-2 text-xs text-yellow-800 rounded-custom2 bg-yellow-50 border border-yellow-300 lg:w-[410px] w-full" style="height:38px;">
+          <svg class="shrink-0 inline w-3 h-3 me-2 text-yellow-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+          </svg>
+          <span class="sr-only">Info</span>
+          <div><span class="font-medium">Warning!</span> Please enter a valid email</div>
+        </div>
+        <div *ngIf="loginForm.get('email')?.valid" class="flex items-center p-2 pe-1 mb-2 text-xs text-green-800 rounded-custom2 bg-green-50 border border-green-300 lg:w-[410px] w-full" style="height:38px;">
+          <svg class="shrink-0 inline w-3 h-3 me-2 text-green-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+          </svg>
+          <span class="sr-only">Info</span>
+          <div><span class="font-medium">Success!</span> Email looks good</div>
+        </div>
+      </div>
+    </div>
+    <div class="mb-6 relative w-full">
+      <input formControlName="password" type="password" id="password"
+        [ngClass]="{
+          'border-[#E0E0E9]': !loginForm.get('password')?.touched,
+          'border-red-500 focus:border-red-500': loginForm.get('password')?.touched && loginForm.get('password')?.invalid,
+          'border-green-500 focus:border-green-500': loginForm.get('password')?.touched && loginForm.get('password')?.valid
+        }"
+        class="lg:w-[410px] w-full h-[55px] rounded-custom2 shadow-[0px_10.09px_20.18px_0px_rgba(68,97,242,0.05)] px-3 border-0.99 pr-12 focus:outline-none transition-colors duration-200"
+        placeholder="Password" required />
+      <div *ngIf="loginForm.get('password')?.touched">
+        <div *ngIf="loginForm.get('password')?.hasError('required')" class="flex items-center p-2 pe-1 mb-2 text-xs text-red-800 rounded-custom2 bg-red-50 border border-red-300 lg:w-[410px] w-full" style="height:38px;">
+          <svg class="shrink-0 inline w-3 h-3 me-2 text-red-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+          </svg>
+          <span class="sr-only">Info</span>
+          <div><span class="font-medium">Error!</span> Password is required</div>
+        </div>
+        <div *ngIf="loginForm.get('password')?.hasError('pattern') && !loginForm.get('password')?.hasError('required')" class="flex items-center p-2 pe-1 mb-2 text-xs text-yellow-800 rounded-custom2 bg-yellow-50 border border-yellow-300 lg:w-[410px] w-full" style="height:38px;">
+          <svg class="shrink-0 inline w-3 h-3 me-2 text-yellow-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+          </svg>
+          <span class="sr-only">Info</span>
+          <div><span class="font-medium">Warning!</span> Password must be strong</div>
+        </div>
+        <div *ngIf="loginForm.get('password')?.valid" class="flex items-center p-2 pe-1 mb-2 text-xs text-green-800 rounded-custom2 bg-green-50 border border-green-300 lg:w-[410px] w-full" style="height:38px;">
+          <svg class="shrink-0 inline w-3 h-3 me-2 text-green-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+          </svg>
+          <span class="sr-only">Info</span>
+          <div><span class="font-medium">Success!</span> Password looks good</div>
+        </div>
+      </div>
+    </div>
+      
+    <app-auth-btn>
+      Login
+    </app-auth-btn>
+    <div class="text-center ">
+<a class="self-end cursor-pointer relative mt-4  text-pink-500 " type="button" (click)="forgot.emit()">Forgot Password?</a>
+  
+  
+    </div>
+    
+
+</form>
+
+</div>
+
+

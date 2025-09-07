@@ -1,0 +1,265 @@
+<section class="py-12 sm:py-16 md:py-20 bg-white" [dir]="isRTL() ? 'rtl' : 'ltr'">
+  <div class="max-w-7xl mx-auto flex flex-col xl:flex-row gap-6 md:gap-8 lg:gap-10 px-4 sm:px-6 lg:px-8">
+    
+    <!-- Left: Stepper & Content -->
+    <div class="flex-1 w-full min-w-0">
+      
+      <!-- Progress Stepper -->
+      <div class="w-full bg-white rounded-xl shadow-md border border-gray-100 p-4 sm:p-6 mb-6 md:mb-8">
+        <div class="flex justify-between w-full">
+          
+          <!-- Step 1: Address -->
+          <div class="flex flex-col items-center flex-1">
+            <div [class]="step() === 1 
+              ? 'bg-pink-600 text-white shadow-md' 
+              : (step() > 1 ? 'bg-pink-100 text-pink-600 shadow-inner' : 'bg-gray-50 text-gray-400')"
+              class="w-8 sm:w-9 h-8 sm:h-9 rounded-full flex items-center justify-center font-bold text-lg sm:text-2xl border-2 border-pink-300/80 transition-all">
+              1
+            </div>
+            <span class="mt-2 sm:mt-3 text-xs font-semibold text-gray-700 uppercase tracking-wider text-center">
+              {{ 'ADDRESS' | translate }}
+            </span>
+          </div>
+          
+          <!-- Connector 1 -->
+          <div class="flex-1 max-w-[60px] sm:max-w-[80px] flex items-center -mx-6 sm:-mx-8 z-10">
+            <div [class]="step() >= 2 ? 'bg-pink-700/30' : 'bg-gray-200/50'" 
+                 class="w-full h-1 rounded-full transition-colors"></div>
+          </div>
+   
+          <!-- Step 2: Payment -->
+          <div class="flex flex-col items-center flex-1">
+            <div [class]="step() === 2 
+              ? 'bg-pink-600 text-white shadow-md' 
+              : (step() > 2 ? 'bg-pink-100 text-pink-600 shadow-inner' : 'bg-gray-50 text-gray-400')"
+              class="w-8 sm:w-9 h-8 sm:h-9 rounded-full flex items-center justify-center font-bold text-lg sm:text-2xl border-2 border-pink-300/80 transition-all">
+              2
+            </div>
+            <span class="mt-2 sm:mt-3 text-xs font-semibold text-gray-700 uppercase tracking-wider text-center">
+              {{ 'PAYMENT' | translate }}
+            </span>
+          </div>
+
+          <!-- Connector 2 -->
+          <div class="flex-1 max-w-[60px] sm:max-w-[80px] flex items-center -mx-6 sm:-mx-8 z-10">
+            <div [class]="step() >= 3 ? 'bg-pink-700/30' : 'bg-gray-200/50'" 
+                 class="w-full h-1 rounded-full transition-colors"></div>
+          </div>
+     
+          <!-- Step 3: Confirmation -->
+          <div class="flex flex-col items-center flex-1">
+            <div [class]="step() === 3 
+              ? 'bg-pink-600 text-white shadow-md' 
+              : (step() > 2 ? 'bg-pink-100 text-pink-600 shadow-inner' : 'bg-gray-50 text-gray-400')"
+              class="w-8 sm:w-9 h-8 sm:h-9 rounded-full flex items-center justify-center font-bold text-lg sm:text-2xl border-2 border-pink-300/80 transition-all">
+              3
+            </div>
+            <span class="mt-2 sm:mt-3 text-xs font-semibold text-gray-700 uppercase tracking-wider text-center">
+              {{ 'CONFIRMATION' | translate }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step Content -->
+      <div class="w-full">
+        
+        <!-- Step 1: Address Selection -->
+        @if (step() === 1) {
+          <div class="bg-white rounded-xl shadow-md border border-gray-100 p-4 sm:p-6 md:p-8 mb-6 md:mb-8">
+            @if (totalUserAddresses()?.length) {
+              <div class="flex flex-col gap-4 mb-6">
+                @for (address of totalUserAddresses(); track address._id) {
+                  <div (click)="selectAddress(address)" 
+                       [class.border-pink-500]="selectedAddress?._id === address._id"
+                       [class.bg-pink-50]="selectedAddress?._id === address._id"
+                       class="rounded-lg bg-gray-50 p-4 flex items-center border border-gray-200 shadow-sm transition-all hover:shadow-md hover:border-pink-300 cursor-pointer">
+                    
+                    <!-- User Icon -->
+                    <div class="flex items-center justify-center w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-gray-200 flex-shrink-0"
+                         [class.mr-4]="!isRTL()"
+                         [class.ml-4]="isRTL()">
+                      <i class="fas fa-user text-gray-500 text-lg sm:text-xl"></i>
+                    </div>
+                    
+                    <!-- Address Details -->
+                    <div class="flex-1" [class.text-right]="isRTL()">
+                      <div class="font-bold text-sm sm:text-base mb-1 text-gray-800 flex items-center gap-2"
+                           [class.flex-row-reverse]="isRTL()">
+                        {{ address.username }}
+                      </div>
+                      <div class="text-xs sm:text-sm mb-1 text-gray-600 flex items-center gap-2"
+                           [class.flex-row-reverse]="isRTL()">
+                        <i class="fas fa-city text-pink-400"></i>
+                        {{ address.city }}
+                      </div>
+                      <div class="text-xs sm:text-sm mb-1 text-gray-600 flex items-center gap-2"
+                           [class.flex-row-reverse]="isRTL()">
+                        <i class="fas fa-road text-pink-400"></i>
+                        {{ address.street }}
+                      </div>
+                      <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-500"
+                           [class.flex-row-reverse]="isRTL()">
+                        <i class="fas fa-phone-alt text-pink-400"></i>
+                        <span>{{ address.phone }}</span>
+                      </div>
+                    </div>
+                    
+                    <!-- Remove Button -->
+                    <button (click)="removeAddress(address._id); $event.stopPropagation()" 
+                            class="bg-gray-100 hover:bg-pink-100 text-pink-600 rounded-full p-2 transition-colors shadow-sm flex-shrink-0"
+                            [class.ml-4]="!isRTL()"
+                            [class.mr-4]="isRTL()"
+                            [attr.aria-label]="'REMOVE_ADDRESS' | translate">
+                      <i class="fas fa-trash-alt text-sm"></i>
+                    </button>
+                  </div>
+                }
+              </div>
+       
+              <!-- Add New Address Button -->
+              <button onclick="my_modal_4.showModal()" 
+                      class="bg-pink-500 text-white rounded-lg px-6 py-3 hover:bg-pink-600 transition-all duration-300 flex items-center gap-2 shadow-md hover:shadow-lg transform hover:scale-105"
+                      [class.flex-row-reverse]="isRTL()">
+                <i class="fas fa-plus"></i> 
+                <span>{{ 'ADD_NEW_ADDRESS' | translate }}</span>
+              </button>
+              
+            } @else {
+              <!-- No Addresses State -->
+              <div class="rounded-xl bg-pink-50 flex flex-col items-center justify-center py-12 sm:py-16 shadow-inner">
+                <i class="fas fa-map-marker-alt text-4xl sm:text-5xl md:text-6xl text-pink-400 mb-3 sm:mb-4"></i>
+                <div class="font-bold text-lg sm:text-xl mb-2 text-pink-700 text-center">
+                  {{ 'NO_ADDRESSES_FOUND' | translate }}
+                </div>
+                <div class="text-gray-500 mb-4 sm:mb-6 text-center text-sm sm:text-base px-4">
+                  {{ 'ADD_FIRST_ADDRESS' | translate }}
+                </div>
+                <button onclick="my_modal_4.showModal()" 
+                        class="bg-pink-500 text-white rounded-xl px-6 sm:px-8 py-3 hover:bg-pink-600 transition-all duration-300 flex items-center gap-2 shadow-md hover:shadow-lg transform hover:scale-105"
+                        [class.flex-row-reverse]="isRTL()">
+                  <i class="fas fa-plus"></i> 
+                  <span>{{ 'ADD_NEW_ADDRESS' | translate }}</span>
+                </button>
+              </div>
+            }
+            
+            <!-- Next Button -->
+            <div class="flex mt-6"
+                 [class.justify-end]="!isRTL()"
+                 [class.justify-start]="isRTL()">
+              <button (click)="step.set(2)" 
+                      [disabled]="!selectedAddress"
+                      class="bg-pink-500 text-white rounded-lg px-6 sm:px-8 py-3 hover:bg-pink-600 transition-all duration-300 flex items-center gap-2 font-semibold shadow-md hover:shadow-lg transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                      [class.flex-row-reverse]="isRTL()">
+                <span>{{ 'NEXT' | translate }}</span>
+                <i class="fas" [class.fa-arrow-right]="!isRTL()" [class.fa-arrow-left]="isRTL()"></i>
+              </button>
+            </div>
+          </div>
+        }
+        
+        <!-- Step 2: Payment Method -->
+        @else if (step() === 2) {
+          <div class="bg-white rounded-xl shadow-md border border-gray-100 p-4 sm:p-6 md:p-8 mb-6 md:mb-8">
+            <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-4 sm:mb-6"
+                [class.text-right]="isRTL()">
+              {{ 'SELECT_PAYMENT_METHOD' | translate }}
+            </h3>
+            
+            <div class="grid gap-4 mb-6 sm:mb-8">
+              <!-- Cash on Delivery -->
+              <button type="button" 
+                      (click)="cashOrder()" 
+                      class="w-full text-left flex items-center gap-4 rounded-lg border border-gray-300 p-4 sm:p-6 hover:bg-pink-50/50 hover:border-pink-300 transition-all duration-300 cursor-pointer group"
+                      [class.text-right]="isRTL()"
+                      [class.flex-row-reverse]="isRTL()">
+                <i class="fas fa-money-bill-wave text-2xl text-blue-600 group-hover:scale-110 transition-transform"></i>
+                <div class="flex-1">
+                  <span class="font-semibold text-gray-800 text-sm sm:text-base">{{ 'CASH_ON_DELIVERY' | translate }}</span>
+                  <p class="text-xs sm:text-sm text-gray-500 mt-1">{{ 'CASH_ON_DELIVERY_DESC' | translate }}</p>
+                </div>
+              </button>
+
+              <!-- Bank Transfer -->
+              <button type="button" 
+                      (click)="checkOutOrder()" 
+                      class="w-full text-left flex items-center gap-4 rounded-lg border border-gray-300 p-4 sm:p-6 hover:bg-pink-50/50 hover:border-pink-300 transition-all duration-300 cursor-pointer group"
+                      [class.text-right]="isRTL()"
+                      [class.flex-row-reverse]="isRTL()">
+                <i class="fa-brands fa-cc-visa text-2xl text-yellow-500 group-hover:scale-110 transition-transform"></i>
+                <div class="flex-1">
+                  <span class="font-semibold text-gray-800 text-sm sm:text-base">{{ 'BANK_TRANSFER' | translate }}</span>
+                  <p class="text-xs sm:text-sm text-gray-500 mt-1">{{ 'BANK_TRANSFER_DESC' | translate }}</p>
+                </div>
+              </button>
+            </div>
+            
+            <!-- Navigation Buttons -->
+            <div class="flex justify-between gap-4">
+              <button (click)="step.set(1)" 
+                      class="bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 rounded-lg px-4 sm:px-6 md:px-8 py-3 transition-all duration-300 flex items-center gap-2 font-semibold"
+                      [class.flex-row-reverse]="isRTL()">
+                <i class="fas" [class.fa-arrow-left]="!isRTL()" [class.fa-arrow-right]="isRTL()"></i>
+                <span>{{ 'BACK' | translate }}</span>
+              </button>
+              <button (click)="step.set(3)" 
+                      class="bg-pink-500 text-white rounded-lg px-4 sm:px-6 md:px-8 py-3 hover:bg-pink-600 transition-all duration-300 flex items-center gap-2 font-semibold shadow-md hover:shadow-lg transform hover:scale-105"
+                      [class.flex-row-reverse]="isRTL()">
+                <span>{{ 'NEXT' | translate }}</span>
+                <i class="fas" [class.fa-arrow-right]="!isRTL()" [class.fa-arrow-left]="isRTL()"></i>
+              </button>
+            </div>
+          </div>
+        }
+        
+        <!-- Step 3: Confirmation -->
+        @else if (step() === 3) {
+          <div class="bg-white rounded-xl shadow-md border border-gray-100 p-4 sm:p-6 md:p-8 mb-6 md:mb-8">
+            <div class="rounded-xl bg-pink-50 flex flex-col items-center justify-center py-12 sm:py-16">
+              <i class="fas fa-check-circle text-5xl sm:text-6xl md:text-7xl text-pink-600 mb-3 sm:mb-4"></i>
+              <h3 class="font-bold text-xl sm:text-2xl mb-2 text-pink-700 text-center">
+                {{ 'THANK_YOU' | translate }}
+              </h3>
+              <p class="text-gray-600 mb-4 text-center text-sm sm:text-base px-4 leading-relaxed">
+                {{ 'ORDER_SUCCESS_MESSAGE' | translate }}
+              </p>
+            </div>
+            
+            <div class="flex mt-6 sm:mt-8"
+                 [class.justify-start]="!isRTL()"
+                 [class.justify-end]="isRTL()">
+              <button (click)="step.set(2)" 
+                      class="bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 rounded-xl px-6 sm:px-8 py-3 transition-all duration-300 flex items-center gap-2 font-semibold"
+                      [class.flex-row-reverse]="isRTL()">
+                <i class="fas" [class.fa-arrow-left]="!isRTL()" [class.fa-arrow-right]="isRTL()"></i>
+                <span>{{ 'BACK' | translate }}</span>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+    
+    <!-- Right: Cart Summary -->
+    <div class="w-full max-w-sm xl:max-w-[330px] xl:min-w-[280px] mx-auto xl:mx-0 bg-pink-50 rounded-3xl p-4 sm:p-6 lg:p-7 flex flex-col justify-between h-fit shadow-lg border border-pink-100"
+         [class.text-right]="isRTL()">
+      <h2 class="text-lg font-bold text-gray-800 mb-4 sm:mb-6 text-center">
+        {{ 'CART_SUMMARY' | translate }}
+      </h2>
+      
+      <div class="space-y-3 sm:space-y-4 text-gray-700 text-sm">
+        <div class="flex justify-between text-pink-600 font-bold text-base sm:text-lg pt-3 sm:pt-4 border-t border-pink-200">
+          <span class="text-gray-700">{{ 'TOTAL' | translate }}:</span>
+          <span class="text-gray-900 font-bold text-lg sm:text-xl">
+            {{ 'CURRENCY' | translate }}{{ totalCartItems() }}
+          </span>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  
+  <!-- Modal Component -->
+  <app-modal></app-modal>
+</section>

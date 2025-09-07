@@ -1,0 +1,21 @@
+/* Product card */
+.product-card {
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s;
+  position: relative;
+}
+.product-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  border-color: transparent; /* شيل البوردر البينك */
+}
+
+/* Plus button (lavender dark) */
+.icon-button.bg-purple-700 {
+  background-color: #6b21a8; /* Lavender dark */
+}
+.icon-button.bg-purple-700:hover {
+  background-color: #581c87;
+}

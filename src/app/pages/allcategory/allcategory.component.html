@@ -1,0 +1,174 @@
+<section class="min-h-screen" [dir]="isRTL() ? 'rtl' : 'ltr'">
+  <div class="flex flex-col lg:flex-row">
+    <!-- Sidebar - Hidden on mobile, shown as overlay when toggled -->
+    <div class="lg:w-80 lg:flex-shrink-0">
+      <app-sidebar></app-sidebar>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="flex-1 px-4 py-6 lg:px-8 lg:py-8">
+
+      @let products = products$ | async;
+      @let totalPages = totalPages$ | async;
+      @let currentPage = currentPage$ | async;
+      @let isLoading = isLoading$ | async;
+      
+      @if (isLoading) {
+        <div class="flex justify-center items-center py-20">
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500"></div>
+        </div>
+      }
+      
+      @if (products && totalPages !== null && currentPage !== null) {
+        <!-- Products Grid - Enhanced with Home Component Features -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+          @for (product of products; track product.id) {
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden w-full max-w-[320px] mx-auto 
+                       flex flex-col group transition-all duration-500 ease-in-out 
+                       hover:scale-105 hover:shadow-2xl hover:-translate-y-2 relative h-[450px]">
+
+              <!-- Stock Badge -->
+              <span class="absolute top-4 z-10 text-xs font-bold px-3 py-1 rounded-full shadow-sm animate-fade-in"
+                    [class.left-4]="!isRTL()" 
+                    [class.right-4]="isRTL()"
+                    [ngClass]="{
+                      'bg-gray-200 text-gray-600': product.quantity === 0,
+                      'bg-yellow-100 text-yellow-600': product.quantity > 0 && product.quantity < 5,
+                      'bg-green-100 text-green-600': product.quantity >= 5
+                    }">
+                <i class="fa fa-tag" [class.mr-1]="!isRTL()" [class.ml-1]="isRTL()"></i>
+                {{ product.quantity === 0 ? ('SOLD_OUT' | translate) : (product.quantity < 5 ? ('FEW_LEFT' | translate) : ('IN_STOCK' | translate)) }}
+              </span>
+
+              <!-- Product Image with Hover Overlay -->
+              <div class="relative group overflow-hidden h-60">
+                <img [src]="product.imgCover" 
+                     [alt]="product.title" 
+                     class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110">
+
+                <!-- Hover Overlay -->
+                <div class="absolute bottom-0 left-0 w-full h-full bg-pink-400/70 flex items-center justify-center 
+                           opacity-0 group-hover:opacity-90 translate-y-full group-hover:translate-y-0 
+                           transition-all duration-500 ease-in-out backdrop-blur-sm shadow-inner">
+                  <div class="flex gap-8">
+                    <!-- Heart/Wishlist Icon -->
+                    <!-- <button 
+                      (click)="addToWishlist(product.id, $event)"
+                      class="text-white text-4xl hover:scale-125 transition-transform duration-300" 
+                      [attr.aria-label]="'ADD_TO_WISHLIST' | translate">
+                      <i class="fas fa-heart"></i>
+                    </button> -->
+
+                    <!-- Eye/View Details Icon -->
+                    <button 
+                      [routerLink]="['/details', product.id]"
+                      class="text-white text-4xl hover:scale-125 transition-transform duration-300"
+                      [attr.aria-label]="'VIEW_DETAILS' | translate">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Product Info -->
+              <div class="p-4 flex flex-col flex-1">
+                <h3 class="text-lg font-bold text-gray-900 truncate mb-2" [class.text-right]="isRTL()">
+                  {{ product.title.split(" ").slice(0, 3).join(" ") }}
+                </h3>
+
+                <!-- Rating -->
+                <div class="flex items-center mb-3" 
+                     [class.flex-row-reverse]="isRTL()" 
+                     [class.justify-end]="isRTL()">
+                  <div class="flex text-yellow-400">
+                    <ng-container *ngFor="let star of [1,2,3,4,5]; let i = index">
+                      <i class="fas fa-star text-sm" 
+                         [class.text-gray-300]="i >= product.rateAvg"></i>
+                    </ng-container>
+                  </div>
+                  <span class="text-gray-600 text-xs ml-2" 
+                        [class.ml-0]="isRTL()" 
+                        [class.mr-2]="isRTL()">
+                    ({{ product.rateAvg?.toFixed(1) }})
+                  </span>
+                </div>
+
+                <!-- Price -->
+                <div class="flex items-center gap-2 mb-3" 
+                     [class.flex-row-reverse]="isRTL()" 
+                     [class.justify-end]="isRTL()">
+                  <span class="text-pink-500 font-semibold text-base">
+                    {{ (product.priceAfterDiscount || product.price) | currency }}
+                  </span>
+                  <span *ngIf="product.priceAfterDiscount && product.priceAfterDiscount < product.price"
+                        class="text-gray-400 line-through text-xs">
+                    {{ product.price | currency }}
+                  </span>
+                </div>
+
+                <!-- Add to Cart Button -->
+                <button 
+                  (click)="AddToCart(product.id, 1, $event)"
+                  [disabled]="product.quantity === 0"
+                  class="mt-auto w-full border-2 border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white 
+                         font-medium py-2 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg 
+                         flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed 
+                         disabled:hover:bg-transparent disabled:hover:text-pink-500">
+                  <i class="fas fa-cart-plus"></i>
+                  {{ product.quantity === 0 ? ('SOLD_OUT' | translate) : ('ADD_TO_CART' | translate) }}
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Pagination - Mobile Responsive -->
+        <nav class="flex justify-center mt-8 lg:mt-16" aria-label="Pagination">
+          <ul class="flex items-center gap-1 sm:gap-2 text-sm sm:text-base bg-white/80 rounded-full px-2 sm:px-4 py-2 shadow-md border border-pink-200 max-w-full overflow-x-auto" 
+              [class.flex-row-reverse]="isRTL()">
+            <!-- Previous Button -->
+            <li class="flex-shrink-0">
+              <button (click)="changePage(currentPage - 1)" 
+                      [disabled]="currentPage === 1"
+                      class="pagination-arrow bg-pink-100 hover:bg-pink-400 text-pink-500 hover:text-white border-none transition-all duration-200 rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center shadow disabled:opacity-50 disabled:cursor-not-allowed">
+                <i class="fas" [class.fa-chevron-left]="!isRTL()" [class.fa-chevron-right]="isRTL()" class="text-xs sm:text-sm"></i>
+              </button>
+            </li>
+            
+            <!-- Page Numbers -->
+            @for (page of getArray(totalPages); track page) {
+              <li class="flex-shrink-0">
+                <button (click)="changePage(page)" 
+                        [ngClass]="{
+                          'bg-pink-500 text-white shadow-lg': page === currentPage,
+                          'bg-white text-pink-500 hover:bg-pink-100': page !== currentPage
+                        }"
+                        class="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold transition-all duration-200 text-xs sm:text-sm border border-pink-200">
+                  {{ page }}
+                </button>
+              </li>
+            }
+            
+            <!-- Next Button -->
+            <li class="flex-shrink-0">
+              <button (click)="changePage(currentPage + 1)" 
+                      [disabled]="currentPage === totalPages"
+                      class="pagination-arrow bg-pink-100 hover:bg-pink-400 text-pink-500 hover:text-white border-none transition-all duration-200 rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center shadow disabled:opacity-50 disabled:cursor-not-allowed">
+                <i class="fas" [class.fa-chevron-right]="!isRTL()" [class.fa-chevron-left]="isRTL()" class="text-xs sm:text-sm"></i>
+              </button>
+            </li>
+          </ul>
+        </nav>
+
+      } @else if (!isLoading) {
+        <!-- No Products Found -->
+        <div class="flex flex-col items-center justify-center py-20">
+          <i class="fas fa-shopping-bag text-6xl text-gray-300 mb-4"></i>
+          <h3 class="text-xl font-semibold text-gray-600 mb-2">{{ 'NO_PRODUCTS_FOUND' | translate }}</h3>
+          <p class="text-gray-500">{{ 'TRY_DIFFERENT_SEARCH' | translate }}</p>
+        </div>
+      }
+
+    </div>
+  </div>
+</section>

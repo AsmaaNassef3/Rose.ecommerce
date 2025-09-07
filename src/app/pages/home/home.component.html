@@ -1,0 +1,279 @@
+<div class="w-full bg-white py-10" [dir]="isRTL() ? 'rtl' : 'ltr'">
+  <div class="container mx-auto px-2">
+    
+    <!-- FIRST SECTION: Category Cards -->
+    <div class=" grid-cols-2 hidden  md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
+      @for (category of reversedCategories | slice:0:4; track $index) {
+        <div class="bg-[#FEEDF7] rounded-[20px] p-3 md:p-4 flex items-center gap-2 md:gap-3 md:hidden" 
+             [class.flex-row-reverse]="isRTL()">
+          <!-- Icon circle -->
+          <div class="bg-[#ec4899] rounded-[50%] text-white w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 flex items-center justify-center flex-shrink-0">
+            <img [src]="category.image" class="w-5 sm:w-6 md:w-8 lg:w-10 filter brightness-0 invert" [alt]="category.name" />
+          </div>
+          <!-- Text -->
+          <div class="flex flex-col min-w-0 flex-1" [class.text-right]="isRTL()">
+            <h1 class="text-[#160E4B] text-xs sm:text-sm md:text-base font-medium truncate">{{ category.name }}</h1>
+            <h3 class="text-[#757F95] text-xs sm:text-xs md:text-sm truncate">{{ category.productsCount }} {{ 'ITEMS' | translate }}</h3>
+          </div>
+        </div>
+      }
+      
+      <!-- Full list for medium+ screens -->
+      @for (category of reversedCategories; track $index) {
+        <div class="bg-[#FEEDF7] rounded-[20px] p-3 md:p-4 flex items-center gap-2 md:gap-3 hidden md:flex" 
+             [class.flex-row-reverse]="isRTL()">
+          <!-- Icon circle -->
+          <div class="bg-[#ec4899] rounded-[50%] text-white w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 flex items-center justify-center flex-shrink-0">
+            <img [src]="category.image" class="w-5 sm:w-6 md:w-8 lg:w-10 filter brightness-0 invert" [alt]="category.name" />
+          </div>
+          <!-- Text -->
+          <div class="flex flex-col min-w-0 flex-1" [class.text-right]="isRTL()">
+            <h1 class="text-[#160E4B] text-xs sm:text-sm md:text-base font-medium truncate">{{ category.name }}</h1>
+            <h3 class="text-[#757F95] text-xs sm:text-xs md:text-sm truncate">{{ category.productsCount }} {{ 'ITEMS' | translate }}</h3>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- SECOND SECTION: Carousel -->
+    <div class=" md:mt-20 hidden md:block">
+      <div class="flex w-full h-80 md:h-96 lg:h-[420px] gap-3 md:gap-6 rounded-[20px] flex-col md:flex-row" 
+           [class.md:flex-row-reverse]="isRTL()">
+        <div class="relative w-full md:w-1/4 lg:w-1/5 h-40 md:h-full flex-shrink-0">
+          <img src="/images/Red christmas gifts with white ribbon.png" [alt]="'CHRISTMAS_GIFTS' | translate"
+            class="w-full h-full object-cover rounded-[20px] md:rounded-l-2xl md:rounded-r-none shadow-lg" 
+            [class.md:rounded-r-2xl]="isRTL()" 
+            [class.md:rounded-l-none]="isRTL()" />
+          <div class="absolute inset-0 flex flex-col items-center justify-center rounded-2xl md:rounded-l-2xl md:rounded-r-none" 
+               [class.md:rounded-r-2xl]="isRTL()" 
+               [class.md:rounded-l-none]="isRTL()">
+            <h3 class="text-pink-600 text-lg md:text-sm lg:text-base pb-2 md:pb-3 font-extrabold drop-shadow-lg text-center">
+              {{ 'START_PRICE' | translate }}
+            </h3>
+            <span class="text-black text-base md:text-lg lg:text-2xl pt-10 md:pt-20 font-extrabold drop-shadow-lg text-center px-2">
+              {{ 'SPECIAL_PERFECT_GIFTS' | translate }}
+            </span>
+          </div>
+          <button class="absolute bottom-4 right-4 md:right-6 lg:right-9 md:bottom-6 bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 md:px-6 rounded-full shadow-lg text-sm md:text-base lg:text-lg transition-colors duration-300" 
+                  [class.right-auto]="isRTL()" 
+                  [class.left-4]="isRTL()" 
+                  [class.md:left-6]="isRTL()" 
+                  [class.lg:left-9]="isRTL()" 
+                  style="z-index:2;">
+            {{ 'SHOP_NOW' | translate }}
+          </button>
+        </div>
+        <div class="w-full md:w-3/4 lg:w-4/5 h-40 md:h-full flex-shrink-0">
+          <img src="/images/Background (5).png" [alt]="'BACKGROUND' | translate"
+            class="w-full h-full object-cover rounded-[20px] md:rounded-r-2xl md:rounded-l-none shadow-lg" 
+            [class.md:rounded-l-2xl]="isRTL()" 
+            [class.md:rounded-r-none]="isRTL()" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Rest of the component with similar translation patterns... -->
+
+    <!-- Owl Carousel with RTL Support -->
+    <div class="mx-auto px-4 md:py-7 md:mt-10 flex flex-col lg:flex-row gap-6 lg:gap-8 items-start" 
+         [class.lg:flex-row-reverse]="isRTL()">
+      <!-- Left Static Content -->
+      <div class="w-full lg:w-1/4 mb-8 lg:mb-0" [class.text-right]="isRTL()">
+        <h4 class="text-pink-600 uppercase font-bold pt-3 tracking-widest mb-2 text-sm md:text-base">
+          {{ 'PREMIUM_GIFTS' | translate }}
+        </h4>
+        <h2 class="text-2xl md:text-3xl lg:text-4xl mt-5 font-bold mb-4 text-gray-900 leading-tight">
+          {{ 'BEST' | translate }} 
+          <span class="text-pink-600 mx-1">{{ 'SELLER' | translate }}</span> 
+          <!-- <span class="text-pink-600">{{ 'GIFTS' | translate }}</span> -->
+        </h2>
+        <p class="text-gray-500 mb-6 mt-3 text-sm md:text-base leading-relaxed">
+          {{ 'BESTSELLER_DESCRIPTION' | translate }}
+        </p>
+        <button class="bg-pink-600 text-white px-6 py-3 mt-5 rounded-[25px] hover:bg-pink-700 transition-colors duration-300 text-sm md:text-base font-medium">
+          {{ 'EXPLORE_MORE' | translate }} {{ isRTL() ? '←' : '→' }}
+        </button>
+      </div>
+      
+      <!-- Carousel Section with RTL Support -->
+      <div class="w-full lg:w-3/4 carousel-container" [attr.dir]="isRTL() ? 'rtl' : 'ltr'">
+        <owl-carousel-o [options]="customOptions" class="custom-carousel">
+          <ng-template carouselSlide *ngFor="let product of pestSeller()">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden w-full max-w-sm mx-auto product-card relative">
+              
+              <!-- Product image with overlay icons -->
+              <div class="product-image-wrapper">
+                <img [src]="product.imgCover" [alt]="'PRODUCT_IMAGE' | translate" />
+                
+                <!-- Favorite Icon -->
+                <div class="favorite-icon">
+                  <i class="fa-regular fa-heart"></i>
+                </div>
+                
+                <!-- Discount badge -->
+                <span *ngIf="product.discount" 
+                      class="discount-badge absolute bg-pink-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow">
+                  -{{ product.discount }}%
+                </span>
+              </div>
+              
+              <!-- Product details -->
+              <div class="p-3 md:p-6 flex flex-col flex-1">
+                <h3 class="text-lg md:text-xl font-bold text-gray-900 truncate mb-2" 
+                    [class.text-right]="isRTL()">
+                  {{ product.title }}
+                </h3>
+                <p class="text-gray-600 text-sm md:text-base mb-2 line-clamp-2" 
+                   [class.text-right]="isRTL()">
+                  {{ product.description.slice(0, 15) }}{{ product.description.length > 50 ? '...' : '' }}
+                </p>
+
+                <!-- Price section -->
+                <div class="flex items-center gap-2 mb-2" 
+                     [class.flex-row-reverse]="isRTL()" 
+                     [class.justify-end]="isRTL()">
+                  <span class="text-pink-600 font-semibold text-lg md:text-xl">
+                    {{ product.priceAfterDiscount }} {{ 'CURRENCY' | translate }}
+                  </span>
+                  <span *ngIf="product.priceAfterDiscount < product.price" 
+                        class="text-gray-400 line-through text-sm md:text-base">
+                    {{ product.price }} {{ 'CURRENCY' | translate }}
+                  </span>
+                </div>
+                
+                <!-- Rating with YELLOW stars -->
+                <div class="flex gap-1 items-center mt-auto" 
+                     [class.flex-row-reverse]="isRTL()" 
+                     [class.justify-end]="isRTL()">
+                  <ng-container *ngFor="let i of [0,1,2,3,4]">
+                    <i class="fa fa-star text-sm md:text-base"
+                       [ngClass]="{
+                         'text-yellow-400': i < product.rateAvg,
+                         'text-gray-300': i >= product.rateAvg
+                       }"></i>
+                  </ng-container>
+                  <span class="ml-2 text-xs md:text-sm text-pink-400 font-semibold" 
+                        [class.ml-0]="isRTL()" 
+                        [class.mr-2]="isRTL()">
+                    {{ product.rateAvg.toFixed(1) }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </owl-carousel-o>
+      </div>
+    </div>
+
+    <!-- Popular Items Section -->
+    <h1 class="text-2xl pb-3 lg:text-3xl font-bold mb-4 text-gray-900" [class.text-right]="isRTL()">
+      {{ 'POPULAR' | translate }}<span class="text-pink-600">{{ 'ITEMS' | translate }}..</span>
+    </h1>
+
+    <section>
+      @if (filteredProducts().length > 0) {
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          @for (product of filteredProducts(); track product._id) {
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden w-full h-[440px] max-w-[320px] mx-auto 
+                       flex flex-col group transition-all duration-500 ease-in-out 
+                       hover:scale-105 hover:shadow-2xl hover:-translate-y-2 relative">
+
+              <!-- Stock Badge -->
+              <span class="absolute top-4 z-10 text-xs font-bold px-3 py-1 rounded-full shadow-sm animate-fade-in"
+                    [class.left-4]="!isRTL()" 
+                    [class.right-4]="isRTL()"
+                    [ngClass]="{
+                      'bg-gray-200 text-gray-600': product.quantity === 0,
+                      'bg-yellow-100 text-yellow-600': product.quantity > 0 && product.quantity < 5,
+                      'bg-green-100 text-green-600': product.quantity >= 5
+                    }">
+                <i class="fa fa-tag" [class.mr-1]="!isRTL()" [class.ml-1]="isRTL()"></i>
+                {{ product.quantity === 0 ? ('SOLD_OUT' | translate) : (product.quantity < 5 ? ('FEW_LEFT' | translate) : ('IN_STOCK' | translate)) }}
+              </span>
+
+              <!-- Product Image -->
+              <div class="relative group overflow-hidden rounded-t-2xl h-60">
+                <img [src]="product.imgCover" [alt]="'PRODUCT_IMAGE' | translate"
+                  class="w-full h-full object-cover rounded-[12px] transition-transform duration-500 ease-in-out group-hover:scale-110" />
+
+                <!-- Hover Overlay -->
+                <div class="absolute bottom-0 left-0 w-full h-full bg-pink-400/70 flex items-center justify-center 
+                           opacity-0 group-hover:opacity-90 translate-y-full group-hover:translate-y-0 
+                           transition-all duration-500 ease-in-out backdrop-blur-sm shadow-inner">
+                  <div class="flex gap-8">
+                    <!-- Heart Icon -->
+                    <!-- <button class="text-white text-4xl hover:scale-125 transition-transform duration-300" 
+                            [attr.aria-label]="'ADD_TO_WISHLIST' | translate">
+                      <i class="fas fa-heart"></i>
+                    </button> -->
+
+                    <!-- Eye Icon -->
+                    <button [routerLink]="['/details', product._id]"
+                      class="text-white text-4xl hover:scale-125 transition-transform duration-300"
+                      [attr.aria-label]="'VIEW_DETAILS' | translate">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Product Content -->
+              <div class="p-4 flex flex-col flex-1">
+                <h3 class="text-lg font-bold text-gray-900 truncate mb-2" [class.text-right]="isRTL()">
+                  {{ product.title }}
+                </h3>
+
+                <!-- Price -->
+                <div class="flex items-center gap-2 mb-3" 
+                     [class.flex-row-reverse]="isRTL()" 
+                     [class.justify-end]="isRTL()">
+                  <span class="text-pink-500 font-semibold text-base">
+                    {{ product.priceAfterDiscount }} {{ 'CURRENCY' | translate }}
+                  </span>
+                  <span *ngIf="product.priceAfterDiscount < product.price"
+                    class="text-gray-400 line-through text-xs">
+                    {{ product.price }} {{ 'CURRENCY' | translate }}
+                  </span>
+                </div>
+
+                <!-- Rating -->
+                <div class="flex gap-1 items-center mb-4" 
+                     [class.flex-row-reverse]="isRTL()" 
+                     [class.justify-end]="isRTL()">
+                  <ng-container *ngFor="let i of [0,1,2,3,4]">
+                    <i class="fa fa-star text-lg transition-all duration-200"
+                      [ngClass]="{
+                        'text-pink-400 scale-110 drop-shadow-pink': i < product.rateAvg,
+                        'text-gray-300': i >= product.rateAvg
+                      }"></i>
+                  </ng-container>
+                  <span class="ml-2 text-xs text-pink-500 font-semibold animate-fade-in" 
+                        [class.ml-0]="isRTL()" 
+                        [class.mr-2]="isRTL()">
+                    {{ product.rateAvg.toFixed(1) }}
+                  </span>
+                </div>
+
+                <!-- Add to Cart Button -->
+                <button (click)="AddToCart(product._id, 1)"
+                  class="mt-auto w-full border-2 border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white 
+                         font-medium py-2 px-4 rounded-[5px] transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                  <i class="fas fa-cart-plus"></i>
+                  {{ 'ADD_TO_CART' | translate }}
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="text-center text-gray-500">{{ 'NO_PRODUCTS_FOUND' | translate }}</p>
+      }
+    </section>
+
+    <!-- Rest of your existing components with similar translation patterns -->
+    <app-lyers></app-lyers>
+    <app-customer></app-customer>
+
+    <!-- Continue with other sections... -->
+  </div>
+</div>

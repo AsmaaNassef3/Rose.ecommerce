@@ -1,0 +1,15 @@
+$cart-summary-radius: 30px;
+$cart-summary-width: 330px;
+$cart-summary-bg: #ffeaf6;
+$cart-summary-shadow: 0 2px 16px 0 rgba(255,87,175,0.07);
+
+.cart-summary {
+  background: $cart-summary-bg;
+  max-width: $cart-summary-width;
+  min-width: 240px;
+  border-radius: $cart-summary-radius;
+  box-shadow: $cart-summary-shadow;
+  padding: 28px;
+}
+
+// ثم طبق الكلاس cart-summary مكان div الخاص بالكارت الوردي في الكود أعلاه.

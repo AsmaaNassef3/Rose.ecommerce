@@ -1,0 +1,40 @@
+<div class="w-full max-w-md overflow-x-hidden  bg-white rounded-xl shadow-lg">
+  <h2 class="text-2xl font-bold my-4 text-center">
+    {{
+      view() === 'login'
+        ? 'Login'
+        : view() === 'register'
+        ? 'Create Account'
+        : 'Forgot Password'
+    }}
+  </h2>
+
+  <ng-container [ngSwitch]="view()">
+  
+   <app-login
+  *ngSwitchCase="'login'"
+  (forgot)="switchTo('forgot')"
+  (loginSuccess)="onLoginSuccess()"  
+></app-login>
+
+    
+    <app-register
+      *ngSwitchCase="'register'"
+      (switchToLogin)="onRegisterSuccess()"  
+    />
+
+    <app-forgetpas
+      *ngSwitchCase="'forgot'"
+      (backToLogin)="switchTo('login')"
+    />
+  </ng-container>
+
+  <div class="text-center mt-4" *ngIf="view() !== 'forgot'">
+    <button
+      class="text-pink-500"
+      (click)="switchTo(view() === 'login' ? 'register' : 'login')"
+    >
+      {{ view() === 'login' ? 'Don’t have an account? Register' : 'Already have an account? Login' }}
+    </button>
+  </div>
+</div>

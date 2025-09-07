@@ -1,0 +1,167 @@
+<div class="max-w-7xl mx-auto p-4 container py-24" [dir]="isRTL() ? 'rtl' : 'ltr'">
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="flex justify-center items-center py-20">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500"></div>
+    </div>
+  }
+
+  <!-- Product Details -->
+  @for (product of productDetail(); track product._id) {
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      
+      <!-- Left/Right: Product Images (responsive to RTL/LTR) -->
+      <div>
+        <!-- Main Image -->
+        <div class="relative bg-white border rounded-xl overflow-hidden shadow-sm">
+          <img [src]="getCurrentImage(product)" 
+               [alt]="product.title"
+               class="w-full h-[500px] object-cover" />
+          
+          <!-- Badges -->
+          <div class="absolute top-4 flex flex-col gap-2"
+               [class.left-4]="!isRTL()"
+               [class.right-4]="isRTL()">
+            <!-- Stock Badge -->
+            @if (product.quantity > 0) {
+              <span class="bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">
+                {{ 'IN_STOCK' | translate }}
+              </span>
+            } @else {
+              <span class="bg-red-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">
+                {{ 'OUT_OF_STOCK' | translate }}
+              </span>
+            }
+            
+            <!-- Premium Badge -->
+            @if (product.isSuperAdmin) {
+              <span class="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-semibold px-3 py-1 rounded-[8px] shadow">
+                {{ 'PREMIUM' | translate }}
+              </span>
+            }
+          </div>
+
+          <!-- Play Icon -->
+          <button class="absolute top-1/2 transform -translate-y-1/2 bg-white shadow-md p-2 rounded-full text-pink-500"
+                  [class.right-4]="!isRTL()"
+                  [class.left-4]="isRTL()">
+            <i class="fas fa-play"></i>
+          </button>
+        </div>
+
+        <!-- Thumbnails -->
+        <div class="flex gap-3 mt-4" [class.flex-row-reverse]="isRTL()">
+          <button 
+            class="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2"
+            [class.border-pink-500]="selectedImageIndex() === -1"
+            [class.border-gray-200]="selectedImageIndex() !== -1"
+            (click)="selectImage(-1)">
+            <img [src]="product.imgCover" class="w-full h-full object-cover" />
+          </button>
+          @for (image of product.images; track $index) {
+            <button 
+              class="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2"
+              [class.border-pink-500]="selectedImageIndex() === $index"
+              [class.border-gray-200]="selectedImageIndex() !== $index"
+              (click)="selectImage($index)">
+              <img [src]="image" class="w-full h-full object-cover" />
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- Right/Left: Product Info (responsive to RTL/LTR) -->
+      <div class="space-y-6" [class.text-right]="isRTL()">
+        <!-- Title -->
+        <h1 class="text-3xl font-bold text-gray-900">{{ product.title }}</h1>
+
+        <!-- Price -->
+        <div class="flex items-center gap-3" [class.flex-row-reverse]="isRTL()">
+          <span class="text-2xl font-bold text-pink-600">{{ 'CURRENCY' | translate }}{{ product.priceAfterDiscount || product.price }}</span>
+          @if (product.priceAfterDiscount && product.priceAfterDiscount < product.price) {
+            <span class="text-lg text-gray-500 line-through">{{ 'CURRENCY' | translate }}{{ product.price }}</span>
+            <span class="text-pink-500 font-semibold text-sm">
+              {{ getDiscountPercentage(product) }}% {{ 'OFF' | translate }}
+            </span>
+          }
+        </div>
+
+        <!-- Short Description -->
+        <p class="text-gray-500 leading-relaxed">
+          {{ product.description.slice(0, 120) || ('NO_DESCRIPTION_AVAILABLE' | translate) }}
+        </p>
+
+        <!-- Quantity + Size + Colors -->
+        <div class="flex flex-wrap items-center gap-6" [class.flex-row-reverse]="isRTL()">
+          <!-- Quantity -->
+          <div class="flex items-center gap-2">
+            <button class="w-8 h-8 flex items-center justify-center border rounded-full text-pink-500">-</button>
+            <span class="px-4">{{ 1 }}</span>
+            <button class="w-8 h-8 flex items-center justify-center border rounded-full text-pink-500">+</button>
+          </div>
+
+          <!-- Size -->
+          <div>
+            <select class="border rounded-lg px-3 py-1 text-gray-700" [class.text-right]="isRTL()">
+              <option>{{ 'CHOOSE_SIZE' | translate }}</option>
+              <option *ngFor="let size of ['S','M','L','XL']">{{ size }}</option>
+            </select>
+          </div>
+
+          <!-- Colors -->
+          <div class="flex gap-2">
+            <span class="w-6 h-6 rounded-full bg-black cursor-pointer border-2"
+                  [class.border-pink-500]="selectedImageIndex() === -1"
+                  (click)="selectColor('black')">
+            </span>
+            <span class="w-6 h-6 rounded-full bg-red-500 cursor-pointer border-2"
+                  [class.border-pink-500]="selectedImageIndex() === 0"
+                  (click)="selectColor('red')">
+            </span>
+            <span class="w-6 h-6 rounded-full bg-blue-500 cursor-pointer border-2"
+                  [class.border-pink-500]="selectedImageIndex() === 1"
+                  (click)="selectColor('blue')">
+            </span>
+          </div>
+        </div>
+
+        <!-- Product Details List -->
+        <ul class="text-sm text-gray-600 space-y-1" [class.text-right]="isRTL()">
+          <li><strong>{{ 'STOCK' | translate }}:</strong> {{ 'AVAILABLE' | translate }}</li>
+          <li><strong>{{ 'SKU' | translate }}:</strong> {{ product.slug }}</li>
+          <li><strong>{{ 'CATEGORY' | translate }}:</strong> {{ 'JEWELRY_ACCESSORIES' | translate }}</li>
+          <li><strong>{{ 'BRAND' | translate }}:</strong> Novak</li>
+          <li><strong>{{ 'TAGS' | translate }}:</strong> {{ 'GIFTS_WATCH_MODERN_SHOP' | translate }}</li>
+        </ul>
+
+        <!-- Premium Badge (Display Only) -->
+        @if (product.isSuperAdmin) {
+          <div class="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-xl">
+            <div class="flex items-center gap-2" [class.flex-row-reverse]="isRTL()">
+              <i class="fas fa-crown"></i>
+              <span class="font-semibold">{{ 'PREMIUM_PRODUCT' | translate }}</span>
+            </div>
+            <p class="text-sm mt-1 opacity-90" [class.text-right]="isRTL()">
+              {{ 'PREMIUM_PRODUCT_DESC' | translate }}
+            </p>
+          </div>
+        }
+
+        <!-- Buttons -->
+        <div class="flex gap-4" [class.flex-row-reverse]="isRTL()">
+          <button (click)="AddToCart(product._id, 1)" 
+                  type="submit" 
+                  class="bg-pink-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-pink-600 flex items-center gap-2"
+                  [class.flex-row-reverse]="isRTL()">
+            <i class="fas fa-shopping-cart"></i> 
+            <span>{{ 'ADD_TO_CART' | translate }}</span>
+          </button>
+          <button class="border border-pink-500 text-pink-500 px-4 py-3 rounded-lg hover:bg-pink-50 flex items-center justify-center"
+                  [attr.title]="'ADD_TO_WISHLIST' | translate">
+            <i class="fas fa-heart"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

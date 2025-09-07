@@ -1,0 +1,240 @@
+<nav class="bg-white shadow-lg rounded-3xl mx-auto w-full max-w-7xl relative z-50 transition-all duration-300"
+     [class.rtl]="isRTL()"
+     [dir]="isRTL() ? 'rtl' : 'ltr'">
+  
+  <div class="px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 lg:h-20">
+      
+      <!-- Mobile hamburger button -->
+      <div class="lg:hidden order-1" [class.order-3]="isRTL()">
+        <button 
+          (click)="toggleMobileMenu()"
+          class="p-2 rounded-xl text-gray-600 hover:text-pink-600 hover:bg-pink-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500"
+          [attr.aria-label]="'MENU' | translate"
+          [attr.aria-expanded]="isMobileMenuOpen()">
+          <i class="fas fa-bars text-xl" *ngIf="!isMobileMenuOpen()"></i>
+          <i class="fas fa-times text-xl" *ngIf="isMobileMenuOpen()"></i>
+        </button>
+      </div>
+
+      <!-- Logo -->
+      <div class="flex items-center order-2" [class.order-2]="isRTL()">
+        <a routerLink="/home" class="flex items-center focus:outline-none focus:ring-2 focus:ring-pink-500 rounded-xl">
+          <img 
+            class="h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 object-contain rounded-xl shadow-md bg-white p-1 transition-transform duration-200 hover:scale-105" 
+            src="/images/Group 3.png" 
+            [alt]="'LOGO' | translate"
+            loading="lazy"
+          />
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden lg:flex items-center space-x-8 order-3" 
+           [class.space-x-reverse]="isRTL()" 
+           [class.order-1]="isRTL()">
+        <nav class="flex space-x-6" [class.space-x-reverse]="isRTL()">
+          <a routerLink="/home" 
+             routerLinkActive="!text-pink-600 !bg-pink-100" 
+             class="flex items-center space-x-2 px-4 py-2 rounded-xl text-gray-700 hover:text-pink-600 hover:bg-pink-50 transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-pink-500"
+             [class.space-x-reverse]="isRTL()">
+            <i class="fas fa-home flex-shrink-0"></i>
+            <span>{{ 'HOME' | translate }}</span>
+          </a>
+          
+          <a routerLink="/allcategory" 
+             routerLinkActive="!text-pink-600 !bg-pink-100"
+             class="flex items-center space-x-2 px-4 py-2 rounded-xl text-gray-700 hover:text-pink-600 hover:bg-pink-50 transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-pink-500"
+             [class.space-x-reverse]="isRTL()">
+            <i class="fas fa-th-large flex-shrink-0"></i>
+            <span>{{ 'CATEGORIES' | translate }}</span>
+          </a>
+          
+          <a routerLink="/about" 
+             routerLinkActive="!text-pink-600 !bg-pink-100"
+             class="flex items-center space-x-2 px-4 py-2 rounded-xl text-gray-700 hover:text-pink-600 hover:bg-pink-50 transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-pink-500"
+             [class.space-x-reverse]="isRTL()">
+            <i class="fas fa-info-circle flex-shrink-0"></i>
+            <span>{{ 'ABOUT' | translate }}</span>
+          </a>
+          
+          <a routerLink="/contact" 
+             routerLinkActive="!text-pink-600 !bg-pink-100"
+             class="flex items-center space-x-2 px-4 py-2 rounded-xl text-gray-700 hover:text-pink-600 hover:bg-pink-50 transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-pink-500"
+             [class.space-x-reverse]="isRTL()">
+            <i class="fas fa-envelope flex-shrink-0"></i>
+            <span>{{ 'CONTACT' | translate }}</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Right side actions -->
+      <div class="flex items-center space-x-2 sm:space-x-3 order-4" 
+           [class.space-x-reverse]="isRTL()" 
+           [class.order-3]="isRTL()">
+        
+        <!-- Language Selector -->
+        <div class="relative">
+          <select 
+            [value]="selectedLang()" 
+            (change)="changeLang($event)"
+            class="px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-200 appearance-none pr-8"
+            [attr.aria-label]="'SELECT_LANGUAGE' | translate">
+            <option *ngFor="let lang of languages" [value]="lang.code">
+              {{ lang.flag }} {{ lang.label }}
+            </option>
+          </select>
+          <i class="fas fa-chevron-down absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-400 pointer-events-none"
+             [class.right-auto]="isRTL()" 
+             [class.left-3]="isRTL()"></i>
+        </div>
+ @if (!isAuthenticated()) {
+          <!-- Login button -->
+          <button 
+            (click)="openModal()"
+            class="flex items-center space-x-2 px-4 py-2 bg-pink-600 text-white rounded-xl hover:bg-pink-700 transition-all duration-200 font-medium shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+            [class.space-x-reverse]="isRTL()">
+            <i class="fas fa-sign-in-alt text-sm flex-shrink-0"></i>
+            <span class="hidden sm:inline">{{ 'LOGIN' | translate }}</span>
+          </button>
+        } @else {
+          <!-- Authenticated user actions -->
+          <div class="flex items-center space-x-2" [class.space-x-reverse]="isRTL()">
+            
+            <!-- Search button -->
+            <button 
+              (click)="toggleSearch()" 
+              class="p-2 text-gray-600 hover:text-pink-600 hover:bg-pink-50 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500"
+              [attr.aria-label]="'SEARCH' | translate">
+              <i class="fas fa-search text-lg"></i>
+            </button>
+
+            <!-- Cart button -->
+            <button 
+              routerLink="/cart"
+              class="relative p-2 text-gray-600 hover:text-pink-600 hover:bg-pink-50 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500"
+              [attr.aria-label]="'CART' | translate">
+              <i class="fas fa-shopping-cart text-lg"></i>
+              @if (cartCount() > 0) {
+                <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1 shadow-md animate-pulse"
+                      [class.-right-auto]="isRTL()" 
+                      [class.-left-1]="isRTL()">
+                  {{ cartCount() > 99 ? '99+' : cartCount() }}
+                </span>
+              }
+            </button>
+
+            <!-- Profile button -->
+            <button 
+              routerLink="/updateprofile"
+              class="flex items-center space-x-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-xl hover:bg-pink-50 hover:text-pink-600 transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-pink-500"
+              [class.space-x-reverse]="isRTL()">
+              <i class="fas fa-user text-sm flex-shrink-0"></i>
+              <span class="hidden md:inline">{{ 'PROFILE' | translate }}</span>
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    @if (isMobileMenuOpen()) {
+      <div class="lg:hidden border-t border-gray-200 mt-4 animate-slideDown" 
+           [attr.dir]="isRTL() ? 'rtl' : 'ltr'">
+        <div class="py-4 space-y-2">
+          <a routerLink="/home" 
+             (click)="closeMobileMenu()"
+             routerLinkActive="!text-pink-600 !bg-pink-50" 
+             class="flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 hover:text-pink-600 hover:bg-pink-50 transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-pink-500"
+             [class.space-x-reverse]="isRTL()">
+            <i class="fas fa-home w-5 flex-shrink-0"></i>
+            <span>{{ 'HOME' | translate }}</span>
+          </a>
+          
+          <a routerLink="/allcategory" 
+             (click)="closeMobileMenu()"
+             routerLinkActive="!text-pink-600 !bg-pink-50"
+             class="flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 hover:text-pink-600 hover:bg-pink-50 transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-pink-500"
+             [class.space-x-reverse]="isRTL()">
+            <i class="fas fa-th-large w-5 flex-shrink-0"></i>
+            <span>{{ 'CATEGORIES' | translate }}</span>
+          </a>
+          
+          <a routerLink="/about" 
+             (click)="closeMobileMenu()"
+             routerLinkActive="!text-pink-600 !bg-pink-50"
+             class="flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 hover:text-pink-600 hover:bg-pink-50 transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-pink-500"
+             [class.space-x-reverse]="isRTL()">
+            <i class="fas fa-info-circle w-5 flex-shrink-0"></i>
+            <span>{{ 'ABOUT' | translate }}</span>
+          </a>
+          
+          <a routerLink="/contact" 
+             (click)="closeMobileMenu()"
+             routerLinkActive="!text-pink-600 !bg-pink-50"
+             class="flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 hover:text-pink-600 hover:bg-pink-50 transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-pink-500"
+             [class.space-x-reverse]="isRTL()">
+            <i class="fas fa-envelope w-5 flex-shrink-0"></i>
+            <span>{{ 'CONTACT' | translate }}</span>
+          </a>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Auth Modal -->
+  <dialog #modal 
+          class="modal backdrop-blur-sm bg-black/50 rounded-3xl border-0 max-w-md mx-auto focus:outline-none">
+    <div class="relative bg-white rounded-3xl  shadow-2xl max-w-md w-full px-4 animate-fadeInUp">
+      <button 
+        (click)="closeModal()"
+        class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors duration-200 p-1 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500"
+        [class.right-auto]="isRTL()" 
+        [class.left-4]="isRTL()"
+        [attr.aria-label]="'CLOSE' | translate">
+        <i class="fas fa-times text-lg"></i>
+      </button>
+      <app-auth (closeModal)="closeModal()"></app-auth>
+    </div>
+  </dialog>
+</nav>
+
+<!-- Search Modal -->
+@if (isSearchOpen()) {
+  <div class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm animate-fadeIn"
+       (click)="closeSearch()"
+       [attr.dir]="isRTL() ? 'rtl' : 'ltr'">
+    <div class="w-full max-w-2xl mx-4 sm:mx-6 lg:mx-8 animate-slideInUp"
+         (click)="$event.stopPropagation()">
+      
+      <!-- Close button -->
+      <button 
+        (click)="closeSearch()"
+        class="absolute -top-12 right-4 sm:right-6 w-10 h-10 bg-pink-600 hover:bg-pink-700 text-white rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+        [class.right-auto]="isRTL()" 
+        [class.left-4]="isRTL()" 
+        [class.sm:left-6]="isRTL()"
+        [attr.aria-label]="'CLOSE_SEARCH' | translate">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <!-- Search input -->
+      <div class="relative">
+        <input 
+          #searchInput
+          type="text"
+          [placeholder]="'SEARCH_PLACEHOLDER' | translate"
+          (input)="onSearch($event)"
+          autocomplete="off"
+          class="w-full h-14 sm:h-16 lg:h-20 px-6 pr-16 bg-white rounded-2xl sm:rounded-3xl text-lg sm:text-xl font-medium text-gray-800 placeholder-gray-400 shadow-2xl focus:outline-none focus:ring-4 focus:ring-pink-500/30 transition-all duration-200"
+          [class.pr-6]="isRTL()" 
+          [class.pl-16]="isRTL()"
+          [attr.dir]="isRTL() ? 'rtl' : 'ltr'"
+        />
+        <i class="fas fa-search absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg sm:text-xl"
+           [class.right-auto]="isRTL()" 
+           [class.left-6]="isRTL()"></i>
+      </div>
+    </div>
+  </div>
+}

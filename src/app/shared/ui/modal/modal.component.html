@@ -1,0 +1,176 @@
+<!-- You can open the modal using ID.showModal() method -->
+
+<dialog id="my_modal_4" class="modal rounded-[20px] bg-white shadow-lg">
+  <div class="modal-box w-11/12 max-w-5xl">
+    <!-- Modal Content Body ONLY -->
+    <div class="w-full md:w-[460px] bg-white relative rounded-xl p-7 shadow-xl mx-auto">
+      <!-- Header (العنوان + زر أعلى يمين) -->
+      <div class="flex items-center justify-between mb-5">
+        <div class="text-lg font-bold text-gray-800">
+          @if (modalStep() === 1) { Select Address } @else { Add New Address }
+        </div>
+        @if (modalStep() === 1) {
+          <button (click)="goToForm()" class="bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700 transition flex items-center gap-2">
+            <i class="fas fa-plus"></i> New Address
+          </button>
+        }
+        @if (modalStep() === 2) {
+          <button (click)="backToList()" class="text-pink-600 bg-pink-100 hover:bg-pink-200 rounded-lg px-3 py-2 flex items-center gap-1 transition text-sm">
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+        }
+      </div>
+    
+      <!-- Step 1: List Addresses or Empty Message -->
+      @if (modalStep() === 1) {
+        @if (totalUserAddresses()?.length) {
+         <div class="flex flex-col gap-4 max-h-72 overflow-auto">
+  @for (address of totalUserAddresses(); track address._id) {
+<div
+  class="rounded-[5px] bg-white p-5 border border-gray-200 shadow-md hover:shadow-lg transition"
+>
+  <!-- Header Row: Icon + Username + Action -->
+  <div class="flex justify-between items-center mb-4">
+    <div class="flex items-center gap-3">
+      <!-- User Icon -->
+      <div
+        class="flex items-center rounded-[50%] justify-center w-12 h-12 rounded-full bg-pink-50 text-pink-500 shadow-sm"
+      >
+        <i class="fas fa-user text-lg"></i>
+      </div>
+      <!-- Username -->
+      <h3 class="font-semibold text-base text-gray-800">
+        {{ address.username }}
+      </h3>
+    </div>
+
+    <!-- Remove Button -->
+    <button
+      (click)="removeAddress(address._id)"
+      class="bg-gray-100 hover:bg-pink-100 text-pink-600 rounded-full p-2 transition shadow-sm"
+      title="Remove Address"
+    >
+      <i class="fas fa-trash-alt"></i>
+    </button>
+  </div>
+
+  <!-- Address Details -->
+  <div class="space-y-2 text-sm text-gray-700">
+    <p class="flex items-center gap-2">
+      <i class="fas fa-city text-pink-400"></i>
+      <span class="font-medium">City:</span> {{ address.city }}
+    </p>
+    <p class="flex items-center gap-2">
+      <i class="fas fa-road text-pink-400"></i>
+      <span class="font-medium">Street:</span> {{ address.street }}
+    </p>
+    <p class="flex items-center gap-2">
+      <i class="fas fa-phone-alt text-pink-400"></i>
+      <span class="font-medium">Phone:</span> {{ address.phone }}
+    </p>
+  </div>
+</div>
+
+
+
+  }
+</div>
+        } @else {
+          <div class="flex flex-col items-center py-12">
+            <i class="fas fa-map-marker-alt text-5xl text-pink-300 mb-3"></i>
+            <div class="font-bold text-lg text-pink-700 mb-2">No Addresses Found!</div>
+            <div class="text-gray-400 mb-3 text-sm">Add your first shipping address now.</div>
+          </div>
+        }
+      }
+
+      <!-- Step 2: Add New Address Form -->
+      @if (modalStep() === 2) {
+        <form [formGroup]="addressForm" (ngSubmit)="submitForm()" class="flex flex-col gap-6" autocomplete="off" spellcheck="false">
+          <!-- Name -->
+          <div>
+            <label for="username" class="block mb-2 text-sm font-medium text-gray-700">Name</label>
+            <input
+              formControlName="username" 
+              type="text" 
+              id="username"
+              autocomplete="off" 
+              autocorrect="off" 
+              autocapitalize="off"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 transition shadow-sm"
+              placeholder="Full Name" 
+              required />
+          </div>
+
+          <!-- City -->
+          <div>
+            <label for="city" class="block mb-2 text-sm font-medium text-gray-700">City</label>
+            <input 
+              id="city" 
+              formControlName="city" 
+              type="text"
+              autocomplete="off" 
+              autocorrect="off"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 transition shadow-sm"
+              placeholder="Enter city" 
+              required>
+          </div>
+
+          <!-- Address -->
+          <div>
+            <label for="street" class="block mb-2 text-sm font-medium text-gray-700">Address</label>
+            <input 
+              id="street" 
+              formControlName="street" 
+              type="text"
+              autocomplete="off" 
+              autocorrect="off"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 transition shadow-sm"
+              placeholder="Full Address" 
+              required>
+          </div>
+
+          <!-- Phone -->
+          <div>
+            <label for="phone" class="block mb-2 text-sm font-medium text-gray-700">Phone</label>
+            <input 
+              id="phone" 
+              formControlName="phone" 
+              type="tel"
+              autocomplete="off" 
+              autocorrect="off"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5 transition shadow-sm"
+              placeholder="01XXXXXXXXX" 
+              required>
+          </div>
+          
+          <div id="map" style="height: 400px; width: 100%; background: #f0f0f0;"></div>
+          
+          <!-- الأزرار -->
+          <div class="flex gap-4 pt-2">
+            <button 
+              type="button" 
+              (click)="backToList()"  
+              class="bg-gray-100 text-pink-500 border border-pink-200 px-5 py-2 rounded-lg font-medium hover:bg-gray-200 transition flex items-center gap-2">
+              <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <button 
+              type="submit"  
+              [disabled]="addressForm.invalid || isSubmitting"
+              class="bg-pink-600 text-white px-5 py-2 rounded-lg font-medium hover:bg-pink-700 transition flex items-center gap-2 ml-auto shadow-md disabled:opacity-50">
+              <i class="fas fa-plus"></i> 
+              {{ isSubmitting ? 'Saving...' : 'Save Address' }}
+            </button>
+          </div>
+        </form>
+      } 
+    </div>
+   
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button, it will close the modal -->
+        <button class="btn text-pink-600">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>

@@ -1,0 +1,234 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-white p-4 flex items-center justify-center" [dir]="isRTL() ? 'rtl' : 'ltr'">
+  <div class="w-full max-w-md">
+    <form [formGroup]="registerForm" (ngSubmit)="updatePassword()" 
+          class="bg-white rounded-2xl shadow-2xl border border-gray-200/60 overflow-hidden animate-fadeIn">
+      
+      <!-- Header Section -->
+      <div class="bg-gradient-to-r from-gray-600 to-gray-800 px-6 py-8 text-white text-center animate-fadeIn">
+        <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg backdrop-blur-sm">
+          <i class="fas fa-lock text-2xl"></i>
+        </div>
+        <h2 class="text-2xl font-bold mb-2">
+          {{ 'CHANGE_PASSWORD' | translate }}
+        </h2>
+        <p class="text-gray-200 text-sm">{{ 'UPDATE_PASSWORD_DESC' | translate }}</p>
+      </div>
+
+      <div class="p-6">
+        <!-- Current Password Field -->
+        <div class="mb-6 animate-slideUp" style="animation-delay: 0.1s">
+          <label class="flex items-center text-sm font-semibold text-gray-700 mb-3"
+                 [class.flex-row-reverse]="isRTL()"
+                 [class.text-right]="isRTL()">
+            <i class="fas fa-eye text-gray-500"
+               [class.mr-2]="!isRTL()" 
+               [class.ml-2]="isRTL()"></i>
+            {{ 'CURRENT_PASSWORD' | translate }}
+          </label>
+          
+          <div class="relative">
+            <input
+              formControlName="password"
+              [type]="showCurrentPassword ? 'text' : 'password'"
+              [ngClass]="{
+                'border-gray-300 focus:border-gray-500 bg-white': !registerForm.get('password')?.touched,
+                'border-red-400 focus:border-red-500 bg-red-50': registerForm.get('password')?.touched && registerForm.get('password')?.invalid,
+                'border-green-400 focus:border-green-500 bg-green-50': registerForm.get('password')?.touched && registerForm.get('password')?.valid
+              }"
+              class="w-full px-4 py-4 border-2 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 shadow-sm"
+              [class.text-right]="isRTL()"
+              [class.pr-24]="!isRTL()"
+              [class.pl-24]="isRTL()"
+              [placeholder]="'ENTER_CURRENT_PASSWORD' | translate"
+              required
+            />
+            
+            <!-- Password Toggle Button -->
+            <button
+              type="button"
+              (click)="showCurrentPassword = !showCurrentPassword"
+              class="absolute top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-700 transition-colors duration-200 p-1"
+              [class.right-12]="!isRTL()"
+              [class.left-12]="isRTL()">
+              <i *ngIf="!showCurrentPassword" class="fas fa-eye text-lg"></i>
+              <i *ngIf="showCurrentPassword" class="fas fa-eye-slash text-lg"></i>
+            </button>
+            
+            <!-- Status Icon -->
+            <div class="absolute top-1/2 transform -translate-y-1/2"
+                 [class.right-4]="!isRTL()"
+                 [class.left-4]="isRTL()">
+              @if (registerForm.get('password')?.touched) {
+                @if (registerForm.get('password')?.valid) {
+                  <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-check text-green-600 text-sm"></i>
+                  </div>
+                } @else {
+                  <div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-times text-red-600 text-sm"></i>
+                  </div>
+                }
+              }
+            </div>
+          </div>
+          
+          @if (registerForm.get('password')?.touched && registerForm.get('password')?.invalid) {
+            <div class="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg animate-slideDown">
+              <div class="flex items-center text-sm text-red-700"
+                   [class.flex-row-reverse]="isRTL()"
+                   [class.text-right]="isRTL()">
+                <i class="fas fa-exclamation-circle text-red-500"
+                   [class.mr-2]="!isRTL()" 
+                   [class.ml-2]="isRTL()"></i>
+                @if (registerForm.get('password')?.hasError('required')) {
+                  <span class="font-medium">{{ 'CURRENT_PASSWORD_REQUIRED' | translate }}</span>
+                } @else if (registerForm.get('password')?.hasError('pattern')) {
+                  <span class="font-medium">{{ 'ENTER_VALID_PASSWORD' | translate }}</span>
+                }
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- New Password Field -->
+        <div class="mb-6 animate-slideUp" style="animation-delay: 0.2s">
+          <label class="flex items-center text-sm font-semibold text-gray-700 mb-3"
+                 [class.flex-row-reverse]="isRTL()"
+                 [class.text-right]="isRTL()">
+            <i class="fas fa-key text-gray-600"
+               [class.mr-2]="!isRTL()" 
+               [class.ml-2]="isRTL()"></i>
+            {{ 'NEW_PASSWORD' | translate }}
+          </label>
+          
+          <div class="relative">
+            <input
+              formControlName="newPassword"
+              [type]="showNewPassword ? 'text' : 'password'"
+              [ngClass]="{
+                'border-gray-300 focus:border-gray-500 bg-white': !registerForm.get('newPassword')?.touched,
+                'border-red-400 focus:border-red-500 bg-red-50': registerForm.get('newPassword')?.touched && registerForm.get('newPassword')?.invalid,
+                'border-green-400 focus:border-green-500 bg-green-50': registerForm.get('newPassword')?.touched && registerForm.get('newPassword')?.valid
+              }"
+              class="w-full px-4 py-4 border-2 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 shadow-sm"
+              [class.text-right]="isRTL()"
+              [class.pr-24]="!isRTL()"
+              [class.pl-24]="isRTL()"
+              [placeholder]="'ENTER_NEW_PASSWORD' | translate"
+              required
+            />
+            
+            <!-- Password Toggle Button -->
+            <button
+              type="button"
+              (click)="showNewPassword = !showNewPassword"
+              class="absolute top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-700 transition-colors duration-200 p-1"
+              [class.right-12]="!isRTL()"
+              [class.left-12]="isRTL()">
+              <i *ngIf="!showNewPassword" class="fas fa-eye text-lg"></i>
+              <i *ngIf="showNewPassword" class="fas fa-eye-slash text-lg"></i>
+            </button>
+            
+            <!-- Status Icon -->
+            <div class="absolute top-1/2 transform -translate-y-1/2"
+                 [class.right-4]="!isRTL()"
+                 [class.left-4]="isRTL()">
+              @if (registerForm.get('newPassword')?.touched) {
+                @if (registerForm.get('newPassword')?.valid) {
+                  <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-check text-green-600 text-sm"></i>
+                  </div>
+                } @else {
+                  <div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-times text-red-600 text-sm"></i>
+                  </div>
+                }
+              }
+            </div>
+          </div>
+
+          <!-- Password Strength Indicator -->
+          @if (registerForm.get('newPassword')?.value) {
+            <div class="mt-3 animate-slideDown">
+              <div class="flex items-center justify-between text-xs mb-2">
+                <span class="text-gray-600 font-medium">{{ 'PASSWORD_STRENGTH' | translate }}</span>
+                <span [ngClass]="{
+                  'text-red-500': getPasswordStrength() === 'Weak' || getPasswordStrength() === 'ضعيف',
+                  'text-yellow-500': getPasswordStrength() === 'Fair' || getPasswordStrength() === 'متوسط',
+                  'text-green-500': getPasswordStrength() === 'Strong' || getPasswordStrength() === 'قوي'
+                }" class="font-semibold">
+                  {{ getPasswordStrength() }}
+                </span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div [ngClass]="{
+                  'bg-gradient-to-r from-red-400 to-red-500 w-1/3': getPasswordStrength() === 'Weak' || getPasswordStrength() === 'ضعيف',
+                  'bg-gradient-to-r from-yellow-400 to-orange-400 w-2/3': getPasswordStrength() === 'Fair' || getPasswordStrength() === 'متوسط',
+                  'bg-gradient-to-r from-green-400 to-emerald-500 w-full': getPasswordStrength() === 'Strong' || getPasswordStrength() === 'قوي'
+                }" class="h-2 transition-all duration-500 rounded-full"></div>
+              </div>
+            </div>
+          }
+          
+          @if (registerForm.get('newPassword')?.touched && registerForm.get('newPassword')?.invalid) {
+            <div class="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg animate-slideDown">
+              <div class="flex items-center text-sm text-red-700"
+                   [class.flex-row-reverse]="isRTL()"
+                   [class.text-right]="isRTL()">
+                <i class="fas fa-exclamation-circle text-red-500"
+                   [class.mr-2]="!isRTL()" 
+                   [class.ml-2]="isRTL()"></i>
+                @if (registerForm.get('newPassword')?.hasError('required')) {
+                  <span class="font-medium">{{ 'NEW_PASSWORD_REQUIRED' | translate }}</span>
+                } @else if (registerForm.get('newPassword')?.hasError('pattern')) {
+                  <span class="font-medium">{{ 'PASSWORD_REQUIREMENTS' | translate }}</span>
+                }
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Security Tips -->
+        <div class="bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 rounded-xl p-4 mb-6 animate-slideUp" style="animation-delay: 0.3s">
+          <div class="flex gap-3" [class.flex-row-reverse]="isRTL()">
+            <div class="flex-shrink-0 w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+              <i class="fas fa-info-circle text-gray-600"></i>
+            </div>
+            <div class="flex-1" [class.text-right]="isRTL()">
+              <h4 class="text-sm font-semibold text-gray-800 mb-2">{{ 'SECURITY_REQUIREMENTS' | translate }}</h4>
+              <ul class="text-xs text-gray-700 space-y-1">
+                <li class="flex items-center gap-2" [class.flex-row-reverse]="isRTL()">
+                  <i class="fas fa-circle text-gray-400 text-xs"></i>
+                  <span>{{ 'MIN_8_CHARS' | translate }}</span>
+                </li>
+                <li class="flex items-center gap-2" [class.flex-row-reverse]="isRTL()">
+                  <i class="fas fa-circle text-gray-400 text-xs"></i>
+                  <span>{{ 'INCLUDE_UPPER_LOWER' | translate }}</span>
+                </li>
+                <li class="flex items-center gap-2" [class.flex-row-reverse]="isRTL()">
+                  <i class="fas fa-circle text-gray-400 text-xs"></i>
+                  <span>{{ 'ADD_NUMBERS_SPECIAL' | translate }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="animate-slideUp" style="animation-delay: 0.4s">
+          <button 
+            type="submit"
+            [disabled]="registerForm.invalid"
+            class="group relative w-full px-8 py-4 bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform transition-all duration-300 hover:-translate-y-0.5 hover:from-gray-600 hover:to-gray-800 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+            <div class="flex items-center justify-center gap-2" [class.flex-row-reverse]="isRTL()">
+              <i class="fas fa-check-circle transition-transform group-hover:scale-110"></i>
+              <span>{{ 'UPDATE_PASSWORD' | translate }}</span>
+            </div>
+            <!-- Enhanced gradient overlay -->
+            <div class="absolute inset-0 rounded-xl bg-gradient-to-r from-gray-400/20 to-gray-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

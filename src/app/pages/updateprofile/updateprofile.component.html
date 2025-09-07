@@ -1,0 +1,163 @@
+<!-- Mobile Menu Toggle Button -->
+<button 
+  (click)="toggleSidebar()"
+  type="button" 
+  class="fixed top-20 z-50 inline-flex items-center justify-center p-3 bg-white/90 backdrop-blur-sm text-gray-600 rounded-xl shadow-lg border border-gray-200/50 sm:hidden hover:bg-pink-50 hover:text-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transition-all duration-300 hover:scale-105 group"
+  [class.left-4]="!isRTL()"
+  [class.right-4]="isRTL()">
+  <span class="sr-only">{{ 'TOGGLE_SIDEBAR' | translate }}</span>
+  <!-- Animated Hamburger Icon -->
+  <div class="w-6 h-6 relative">
+    <span class="absolute h-0.5 w-full bg-current transition-all duration-300 transform"
+          [class]="isSidebarOpen ? 'top-3 rotate-45' : 'top-1 rotate-0'"></span>
+    <span class="absolute top-2.5 h-0.5 w-full bg-current transition-all duration-300"
+          [class.opacity-0]="isSidebarOpen"></span>
+    <span class="absolute h-0.5 w-full bg-current transition-all duration-300 transform"
+          [class]="isSidebarOpen ? 'top-3 -rotate-45' : 'top-4 rotate-0'"></span>
+  </div>
+</button>
+
+<!-- Sidebar Overlay for Mobile - MUST BE FIRST -->
+@if (isSidebarOpen) {
+  <div class="fixed inset-0 bg-black/50 z-[1040] sm:hidden transition-opacity duration-300 ease-in-out" 
+       (click)="closeSidebar()"
+       aria-hidden="true">
+  </div>
+}
+
+<!-- Main Layout Container -->
+<div class="sm:flex min-h-screen pt-16" [dir]="isRTL() ? 'rtl' : 'ltr'">
+  
+  <!-- Professional Sidebar - FIXED VERSION -->
+  <aside 
+    id="logo-sidebar"
+    class="fixed top-0 w-80 h-screen transition-transform duration-300 ease-in-out transform bg-gradient-to-b from-white via-gray-50 to-gray-100/60 shadow-2xl backdrop-blur-sm overflow-y-auto sm:sticky sm:top-16 sm:h-[calc(100vh-4rem)] sm:z-40 sm:self-start sm:translate-x-0"
+    [class]="getSidebarClasses()"
+    [attr.aria-label]="'PROFESSIONAL_SIDEBAR' | translate">
+
+    <div class="flex flex-col h-full px-4 py-6">
+      
+      <!-- Close Button for Mobile -->
+      <div class="sm:hidden flex justify-between items-center mb-6 pt-4">
+        <h2 class="text-lg font-bold text-gray-900" [class.text-right]="isRTL()">
+          {{ 'ACCOUNT_MANAGEMENT' | translate }}
+        </h2>
+        <button 
+          (click)="closeSidebar()"
+          class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+          <i class="fas fa-times text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Navigation Menu -->
+      <nav class="flex-1 space-y-2">
+        <div class="mb-4 hidden sm:block">
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 mb-3"
+             [class.text-right]="isRTL()">
+            {{ 'ACCOUNT_MANAGEMENT' | translate }}
+          </p>
+        </div>
+
+        <!-- Menu Items -->
+        <ul class="space-y-1">
+          <!-- My Account Item -->
+          <li>
+            <a 
+              routerLink="userdatalogin"
+              (click)="onMobileNavClick()"
+              class="group flex items-center px-4 py-3.5 text-gray-700 rounded-xl hover:bg-gradient-to-r hover:from-pink-50 hover:to-rose-50 hover:text-gray-900 hover:shadow-md transition-all duration-300 border border-transparent hover:border-pink-200/50 relative overflow-hidden"
+              [class.flex-row-reverse]="isRTL()">
+              
+              <div class="relative flex-shrink-0 w-10 h-10 bg-gray-100 group-hover:bg-white rounded-lg flex items-center justify-center transition-all duration-300 group-hover:shadow-sm">
+                <i class="fas fa-user text-gray-500 group-hover:text-pink-500 transition-colors duration-300"></i>
+              </div>
+              
+              <div class="relative flex-1" 
+                   [class.ml-4]="!isRTL()" 
+                   [class.mr-4]="isRTL()"
+                   [class.text-right]="isRTL()">
+                <span class="text-sm font-medium">{{ 'MY_ACCOUNT' | translate }}</span>
+                <p class="text-xs text-gray-500 group-hover:text-gray-600 transition-colors duration-300">
+                  {{ 'PROFILE_SETTINGS' | translate }}
+                </p>
+              </div>
+            </a>
+          </li>
+
+          <!-- Change Password Item -->
+          <li>
+            <a 
+              routerLink="updatepass"
+              (click)="onMobileNavClick()"
+              class="group flex items-center px-4 py-3.5 text-gray-700 rounded-xl hover:bg-gradient-to-r hover:from-pink-50 hover:to-rose-50 hover:text-gray-900 hover:shadow-md transition-all duration-300 border border-transparent hover:border-pink-200/50 relative overflow-hidden"
+              [class.flex-row-reverse]="isRTL()">
+              
+              <div class="relative flex-shrink-0 w-10 h-10 bg-gray-100 group-hover:bg-white rounded-lg flex items-center justify-center transition-all duration-300 group-hover:shadow-sm">
+                <i class="fas fa-lock text-gray-500 group-hover:text-pink-500 transition-colors duration-300"></i>
+              </div>
+              
+              <div class="relative flex-1" 
+                   [class.ml-4]="!isRTL()" 
+                   [class.mr-4]="isRTL()"
+                   [class.text-right]="isRTL()">
+                <span class="text-sm font-medium">{{ 'CHANGE_PASSWORD' | translate }}</span>
+                <p class="text-xs text-gray-500 group-hover:text-gray-600 transition-colors duration-300">
+                  {{ 'UPDATE_SECURITY' | translate }}
+                </p>
+              </div>
+            </a>
+          </li>
+
+        </ul>
+      </nav>
+
+      <!-- Bottom Section with Sign Out -->
+      <div class="pt-6 mt-6 border-t border-gray-200/50">
+        <a 
+          href="#"
+          (click)="signOut()"
+          class="group flex items-center px-4 py-3.5 text-gray-700 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-rose-50 hover:text-red-600 hover:shadow-md transition-all duration-300 border border-transparent hover:border-red-200/50 relative overflow-hidden"
+          [class.flex-row-reverse]="isRTL()">
+          
+          <div class="relative flex-shrink-0 w-10 h-10 bg-gray-100 group-hover:bg-white rounded-lg flex items-center justify-center transition-all duration-300 group-hover:shadow-sm">
+            <i class="fas fa-sign-out-alt text-gray-500 group-hover:text-red-500 transition-colors duration-300"></i>
+          </div>
+          
+          <div class="relative flex-1" 
+               [class.ml-4]="!isRTL()" 
+               [class.mr-4]="isRTL()"
+               [class.text-right]="isRTL()">
+            <span class="text-sm font-medium">{{ 'SIGN_OUT' | translate }}</span>
+            <p class="text-xs text-gray-500 group-hover:text-red-400 transition-colors duration-300">
+              {{ 'END_SESSION' | translate }}
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="w-full sm:flex-1 transition-all duration-300">
+    <div class="min-h-[calc(100vh-4rem)]">
+      <!-- Content Header -->
+      <div class="bg-white border-b border-gray-200/50 px-4 sm:px-6 py-4">
+        <div class="flex items-center justify-between" [class.flex-row-reverse]="isRTL()">
+          <div [class.text-right]="isRTL()">
+            <h1 class="text-xl sm:text-2xl font-bold text-gray-900">{{ 'DASHBOARD' | translate }}</h1>
+            <p class="text-gray-600 mt-1 text-sm sm:text-base">{{ 'WELCOME_BACK' | translate }}</p>
+          </div>
+          <div class="hidden sm:flex items-center gap-3" [class.flex-row-reverse]="isRTL()">
+            <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            <span class="text-sm text-gray-500">{{ 'ONLINE' | translate }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Router Outlet with Enhanced Styling -->
+      <div class="relative bg-gray-50/50 min-h-[calc(100vh-8rem)]">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </main>
+</div>

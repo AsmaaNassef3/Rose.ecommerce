@@ -1,0 +1,93 @@
+<div id="sidebar-backdrop" 
+     class="fixed inset-0 z-40 bg-black bg-opacity-50 lg:hidden hidden"
+     (click)="toggleSidebar()"></div>
+
+<!-- Sidebar -->
+<aside id="logo-sidebar"
+       class="fixed top-0 left-0 z-50 w-80 h-full pt-4 transition-transform duration-300 -translate-x-full lg:translate-x-0 lg:relative lg:z-auto overflow-y-auto bg-white"
+       [attr.aria-label]="'SIDEBAR' | translate">
+  
+  <!-- Close Button (Mobile Only) -->
+  <div class="flex justify-end p-4 lg:hidden">
+    <button (click)="toggleSidebar()"
+            class="p-2 text-gray-500 rounded-full hover:bg-gray-100 transition-colors"
+            [attr.aria-label]="'CLOSE_SIDEBAR' | translate">
+      <i class="fas fa-times text-xl"></i>
+    </button>
+  </div>
+  
+  <div class="h-full px-4 pb-4">
+    <div class="space-y-4 lg:space-y-6 font-medium">
+
+      <!-- Search Card -->
+      <div class="card-container shadow-lg">
+        <h1 class="text-xl lg:text-2xl font-extrabold text-pink-500 mb-4 lg:mb-5 tracking-tight">
+          {{ 'SEARCH' | translate }}
+        </h1>
+        <form [formGroup]="searchForm">
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 lg:pl-4 pointer-events-none">
+              <i class="fas fa-search text-pink-400 text-base lg:text-lg"></i>
+            </div>
+            <input type="search" 
+                   id="sidebar-search" 
+                   formControlName="search"
+                   class="search-input block w-full pl-10 lg:pl-12 pr-4 py-2.5 lg:py-3 text-sm lg:text-base font-semibold text-gray-700 placeholder-pink-400 bg-[#FEEDF7] border border-pink-200 focus:ring-2 focus:ring-pink-200 focus:border-pink-300 transition-all duration-300 rounded-lg lg:rounded-2xl"
+                   [placeholder]="'SEARCH_PLACEHOLDER' | translate" />
+          </div>
+        </form>
+      </div>
+
+      <!-- Categories Card -->
+      <div class="card-container shadow-lg">
+        <h1 class="text-xl lg:text-2xl font-extrabold text-pink-500 mb-4 lg:mb-5 tracking-tight">
+          {{ 'CATEGORIES' | translate }}
+        </h1>
+        <div class="space-y-2 max-h-48 lg:max-h-64 overflow-y-auto pr-2 custom-scrollbar">
+          @for (cat of categories; track cat._id) {
+            <label class="flex items-center justify-between checkbox-label cursor-pointer p-3 lg:p-4 rounded-lg lg:rounded-xl hover:bg-[#FEEDF7] transition-colors">
+              <div class="flex items-center space-x-2 lg:space-x-4 flex-1 min-w-0">
+                <input type="checkbox" 
+                       [checked]="categoriesSelected.includes(cat._id)" 
+                       (change)="handleCategoryChange($event, cat._id)"
+                       class="form-checkbox h-4 w-4 lg:h-5 lg:w-5 text-pink-400 border-gray-300 rounded focus:ring-2 focus:ring-pink-300 transition-all duration-300 flex-shrink-0" />
+                <span class="capitalize font-medium text-sm lg:text-base text-gray-700 truncate">{{ cat.category }}</span>
+              </div>
+              <span class="px-2 py-1 text-xs font-semibold text-pink-600 bg-[#FEEDF7] border border-pink-200 rounded-full flex-shrink-0 ml-2">
+                {{ cat.productCount }}
+              </span>
+            </label>
+          }
+        </div>
+      </div>
+
+      <!-- Price Range Card -->
+      <div class="card-container shadow-lg">
+        <h1 class="text-xl lg:text-2xl font-extrabold text-pink-500 mb-4 lg:mb-5 tracking-tight">
+          {{ 'PRICE_FILTER' | translate }}
+        </h1>
+        <form [formGroup]="priceForm">
+          <div class="mb-4 p-3 bg-[#FEEDF7] rounded-lg text-center text-base lg:text-lg font-semibold text-gray-800">
+            {{ 'MAX_PRICE' | translate }}: <span class="font-bold text-pink-500">{{ priceForm.get('max')?.value | currency:'USD':'symbol':'1.0-0' }}</span>
+          </div>
+          <input type="range" 
+                 min="0" 
+                 max="100" 
+                 step="1" 
+                 formControlName="max"
+                 class="w-full h-2 lg:h-2.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-pink-400 price-range" />
+        </form>
+      </div>
+
+    </div>
+  </div>
+</aside>
+
+<!-- Mobile Toggle Button -->
+<button (click)="toggleSidebar()" 
+        type="button"
+        class="fixed top-4 left-4 z-50 inline-flex items-center p-3 text-sm text-gray-600 rounded-full lg:hidden bg-white shadow-lg hover:bg-[#FEEDF7] focus:outline-none focus:ring-2 focus:ring-pink-200 transition-all duration-200"
+        [attr.aria-label]="'TOGGLE_SIDEBAR' | translate">
+  <span class="sr-only">{{ 'TOGGLE_SIDEBAR' | translate }}</span>
+  <i class="fas fa-bars w-5 h-5"></i>
+</button>

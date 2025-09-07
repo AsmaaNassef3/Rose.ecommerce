@@ -1,0 +1,130 @@
+<section class="about-us-section overflow-hidden" [dir]="isRTL() ? 'rtl' : 'ltr'">
+  <div class="container mx-auto py-8 sm:py-12 md:py-14 lg:py-16 max-w-full 2xl:max-w-[1400px] px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center" 
+         [class.lg:grid-cols-2]="!isRTL()" 
+         [class.lg:grid-cols-2-reverse]="isRTL()">
+
+      <!-- Image -->
+      <div class="w-full flex justify-center order-2 lg:order-1" 
+           [class.lg:order-2]="isRTL()" 
+           [class.lg:order-1]="!isRTL()">
+        <img src="/images/Screenshot 2025-08-17 at 4.07.58 AM.png" 
+             [alt]="'GIFT_BOXES_COLLAGE' | translate" 
+             class="w-full h-auto max-h-[650px] object-contain rounded-2xl lg:rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+      </div>
+
+      <!-- Content -->
+      <div class="content-area space-y-6 mt-6 lg:mt-0 order-1 lg:order-2" 
+           [class.lg:order-1]="isRTL()" 
+           [class.lg:order-2]="!isRTL()" 
+           [class.text-right]="isRTL()" 
+           [class.text-left]="!isRTL()">
+        
+        <div class="section-header space-y-4">
+          <span class="text-xs sm:text-sm font-semibold tracking-widest text-pink-500 uppercase">
+            {{ 'ABOUT_US' | translate }}
+          </span>
+
+          <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-[#2d3748]">
+            {{ 'WE_PROVIDE_BEST_AND_QUALITY' | translate }}
+            <span class="bg-gradient-to-r from-[#e91e63] to-[#9c27b0] bg-clip-text text-transparent">
+              {{ 'GIFTS_BOX' | translate }}
+            </span> 
+            {{ 'PRODUCT_FOR_YOU' | translate }}
+          </h2>
+
+          <p class="text-sm sm:text-base leading-relaxed text-[#718096]">
+            {{ 'ABOUT_US_DESCRIPTION' | translate }}
+          </p>
+
+          <button class="inline-flex items-center gap-3 px-6 py-3 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg rounded-full group focus:outline-none focus:ring-4 focus:ring-pink-500/30" 
+                  [class.flex-row-reverse]="isRTL()"
+                  style="background: linear-gradient(135deg, #e91e63, #9c27b0); font-size: 0.95rem;">
+            {{ 'DISCOVER_MORE' | translate }}
+            <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 
+                 [class.group-hover:-translate-x-1]="isRTL()" 
+                 [class.group-hover:translate-x-1]="!isRTL()" 
+                 [class.rotate-180]="isRTL()" 
+                 viewBox="0 0 20 20" 
+                 fill="currentColor"
+                 [attr.aria-hidden]="true">
+              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 lg:gap-6 mt-8">
+          
+          <!-- Feature 1 -->
+          <div class="feature-item rounded-full bg-white/60 backdrop-blur-sm border border-white/20 transition-all duration-300 hover:bg-white/80 hover:shadow-md hover:scale-105 flex items-center gap-3 p-3 sm:p-4" 
+               [class.flex-row-reverse]="isRTL()">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-white text-sm flex-shrink-0" 
+                 style="background: linear-gradient(135deg, #e91e63, #9c27b0);">
+              <i class="fa-solid fa-shipping-fast" [attr.aria-hidden]="true"></i>
+            </div>
+            <span class="text-sm sm:text-base font-medium text-[#2d3748] min-w-0 flex-1">
+              {{ 'STREAMLINED_SHIPPING' | translate }}
+            </span>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="feature-item rounded-full bg-white/60 backdrop-blur-sm border border-white/20 transition-all duration-300 hover:bg-white/80 hover:shadow-md hover:scale-105 flex items-center gap-3 p-3 sm:p-4" 
+               [class.flex-row-reverse]="isRTL()">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-white text-sm flex-shrink-0" 
+                 style="background: linear-gradient(135deg, #e91e63, #9c27b0);">
+              <i class="fa-solid fa-palette" [attr.aria-hidden]="true"></i>
+            </div>
+            <span class="text-sm sm:text-base font-medium text-[#2d3748] min-w-0 flex-1">
+              {{ 'AFFORDABLE_MODERN_DESIGN' | translate }}
+            </span>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="feature-item rounded-full bg-white/60 backdrop-blur-sm border border-white/20 transition-all duration-300 hover:bg-white/80 hover:shadow-md hover:scale-105 flex items-center gap-3 p-3 sm:p-4" 
+               [class.flex-row-reverse]="isRTL()">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-white text-sm flex-shrink-0" 
+                 style="background: linear-gradient(135deg, #e91e63, #9c27b0);">
+              <i class="fa-solid fa-tags" [attr.aria-hidden]="true"></i>
+            </div>
+            <span class="text-sm sm:text-base font-medium text-[#2d3748] min-w-0 flex-1">
+              {{ 'COMPETITIVE_PRICE_EASY_SHOP' | translate }}
+            </span>
+          </div>
+
+          <!-- Feature 4 -->
+          <div class="feature-item rounded-full bg-white/60 backdrop-blur-sm border border-white/20 transition-all duration-300 hover:bg-white/80 hover:shadow-md hover:scale-105 flex items-center gap-3 p-3 sm:p-4" 
+               [class.flex-row-reverse]="isRTL()">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-white text-sm flex-shrink-0" 
+                 style="background: linear-gradient(135deg, #e91e63, #9c27b0);">
+              <i class="fa-solid fa-star" [attr.aria-hidden]="true"></i>
+            </div>
+            <span class="text-sm sm:text-base font-medium text-[#2d3748] min-w-0 flex-1">
+              {{ 'WE_MADE_AWESOME_PRODUCTS' | translate }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Stats Section (Optional Enhancement) -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 pt-6 border-t border-gray-200">
+          <div class="text-center" [class.text-right]="isRTL()">
+            <div class="text-2xl sm:text-3xl font-bold text-pink-600">500+</div>
+            <div class="text-xs sm:text-sm text-gray-600">{{ 'HAPPY_CUSTOMERS' | translate }}</div>
+          </div>
+          <div class="text-center" [class.text-right]="isRTL()">
+            <div class="text-2xl sm:text-3xl font-bold text-pink-600">50+</div>
+            <div class="text-xs sm:text-sm text-gray-600">{{ 'GIFT_CATEGORIES' | translate }}</div>
+          </div>
+          <div class="text-center" [class.text-right]="isRTL()">
+            <div class="text-2xl sm:text-3xl font-bold text-pink-600">99%</div>
+            <div class="text-xs sm:text-sm text-gray-600">{{ 'SATISFACTION_RATE' | translate }}</div>
+          </div>
+          <div class="text-center" [class.text-right]="isRTL()">
+            <div class="text-2xl sm:text-3xl font-bold text-pink-600">24/7</div>
+            <div class="text-xs sm:text-sm text-gray-600">{{ 'SUPPORT' | translate }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

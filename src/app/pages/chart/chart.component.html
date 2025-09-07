@@ -1,0 +1,237 @@
+<section class="px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20 bg-white" 
+         [dir]="isRTL() ? 'rtl' : 'ltr'">
+  <div class="max-w-7xl mx-auto flex flex-col xl:flex-row gap-6 md:gap-8 lg:gap-10">
+
+    <!-- Left: Cart Table OR Empty Block -->
+    <div class="flex-1 w-full">
+      <div class="overflow-x-auto">
+
+        @if (cartItems().length > 0) {
+          <div>
+            <!-- Clear Cart Button -->
+            <div class="flex items-center mb-4 md:mb-6"
+                 [class.justify-end]="!isRTL()"
+                 [class.justify-start]="isRTL()">
+              <button (click)="clearUserCart()"
+                class="bg-pink-500 text-white text-xs sm:text-sm rounded-2xl py-2.5 sm:py-3 px-4 sm:px-6 hover:bg-pink-600 transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2 transform hover:scale-105"
+                [class.flex-row-reverse]="isRTL()">
+                <i class="fas fa-trash-alt text-sm"></i>
+                <span class="hidden sm:inline">{{ 'CLEAR_CART' | translate }}</span>
+                <span class="sm:hidden">{{ 'CLEAR' | translate }}</span>
+              </button>
+            </div>
+
+            <!-- Desktop Table -->
+            <div class="hidden lg:block">
+              <table class="w-full border-separate border-spacing-x-2 xl:border-spacing-x-6 border-spacing-y-4 min-w-[700px]"
+                     [class.text-left]="!isRTL()"
+                     [class.text-right]="isRTL()">
+                <thead class="text-gray-500 text-sm uppercase">
+                  <tr>
+                    <th class="text-center font-medium py-3">{{ 'IMAGE' | translate }}</th>
+                    <th class="text-center font-medium py-3">{{ 'PRODUCT_NAME' | translate }}</th>
+                    <th class="text-center font-medium py-3">{{ 'PRICE' | translate }}</th>
+                    <th class="text-center font-medium py-3">{{ 'QUANTITY' | translate }}</th>
+                    <th class="text-center font-medium py-3">{{ 'DISCOUNTED_PRICE' | translate }}</th>
+                    <th class="text-center font-medium py-3">{{ 'REMOVE' | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (product of cartItems(); track product._id) {
+                    <tr class="bg-white shadow-md rounded-xl border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+                      <td class="p-4 text-center align-middle">
+                        <div class="flex items-center justify-center">
+                          <img [src]="product.product.imgCover" 
+                               [alt]="'PRODUCT_IMAGE' | translate" 
+                               class="w-16 xl:w-20 h-16 xl:h-20 object-cover rounded-lg shadow-sm" />
+                        </div>
+                      </td>
+                      <td class="p-4 text-center align-middle">
+                        <div class="font-semibold text-gray-800 text-sm xl:text-base mb-1">{{ product.product.title.slice(0, 20) }}</div>
+                        <div class="text-xs xl:text-sm text-gray-500">{{ product.product.description.slice(0, 15) }}</div>
+                      </td>
+                      <td class="p-4 text-center align-middle">
+                        <span class="font-semibold text-gray-800 text-sm xl:text-base">{{ 'CURRENCY' | translate }}{{ product.product.price.toFixed(2) }}</span>
+                      </td>
+                      <td class="p-4 text-center align-middle">
+                        <div class="flex items-center justify-center gap-2"
+                             [class.flex-row-reverse]="isRTL()">
+                          <button (click)="updateProductQuantity(product.product._id, product.quantity - 1)" 
+                                  [disabled]="product.quantity <= 1" 
+                                  class="w-7 h-7 rounded-full bg-pink-100 text-pink-500 text-lg font-bold flex items-center justify-center hover:bg-pink-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                  [attr.aria-label]="'DECREASE_QUANTITY' | translate">–</button>
+                          <span class="font-medium text-gray-800 px-2 text-sm xl:text-base">{{ product.quantity }}</span>
+                          <button (click)="updateProductQuantity(product.product._id, product.quantity + 1)"  
+                                  [disabled]="product.quantity >= product.product.quantity" 
+                                  class="w-7 h-7 rounded-full bg-pink-100 text-pink-500 text-lg font-bold flex items-center justify-center hover:bg-pink-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                  [attr.aria-label]="'INCREASE_QUANTITY' | translate">+</button>
+                        </div>
+                      </td>
+                      <td class="p-4 text-center align-middle">
+                        <span class="font-semibold text-pink-600 text-sm xl:text-base">{{ 'CURRENCY' | translate }}{{ product.product.priceAfterDiscount.toFixed(2) }}</span>
+                      </td>
+                      <td class="p-4 text-center align-middle">
+                        <button (click)="removeProductFromCart(product.product._id)" 
+                                class="text-gray-400 hover:text-red-500 text-xl transition-colors duration-300 p-2 rounded-full hover:bg-red-50"
+                                [attr.aria-label]="'REMOVE_ITEM' | translate">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Mobile Cards -->
+            <div class="block lg:hidden space-y-4">
+              @for (product of cartItems(); track product._id) {
+                <div class="bg-white shadow-md rounded-xl p-4 border border-gray-100">
+                  <div class="flex gap-4" [class.flex-row-reverse]="isRTL()">
+                    <!-- Product Image -->
+                    <div class="flex-shrink-0">
+                      <img [src]="product.product.imgCover" 
+                           [alt]="'PRODUCT_IMAGE' | translate" 
+                           class="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg shadow-sm" />
+                    </div>
+                    
+                    <!-- Product Details -->
+                    <div class="flex-1 min-w-0" [class.text-right]="isRTL()">
+                      <h3 class="font-semibold text-gray-800 text-sm sm:text-base mb-1 truncate">{{ product.product.title }}</h3>
+                      <p class="text-xs sm:text-sm text-gray-500 mb-2">{{ product.product.description.slice(0, 30) }}</p>
+                      
+                      <!-- Price Info -->
+                      <div class="flex flex-col sm:flex-row sm:items-center sm:gap-4 mb-3"
+                           [class.sm:flex-row-reverse]="isRTL()">
+                        <div class="flex items-center gap-2 text-sm"
+                             [class.flex-row-reverse]="isRTL()">
+                          <span class="text-gray-500">{{ 'PRICE' | translate }}:</span>
+                          <span class="font-medium text-gray-800">{{ 'CURRENCY' | translate }}{{ product.product.price.toFixed(2) }}</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm"
+                             [class.flex-row-reverse]="isRTL()">
+                          <span class="text-gray-500">{{ 'DISCOUNTED' | translate }}:</span>
+                          <span class="font-semibold text-pink-600">{{ 'CURRENCY' | translate }}{{ product.product.priceAfterDiscount.toFixed(2) }}</span>
+                        </div>
+                      </div>
+                      
+                      <!-- Quantity Controls -->
+                      <div class="flex items-center justify-between"
+                           [class.flex-row-reverse]="isRTL()">
+                        <div class="flex items-center gap-2"
+                             [class.flex-row-reverse]="isRTL()">
+                          <button (click)="updateProductQuantity(product.product._id, product.quantity - 1)" 
+                                  [disabled]="product.quantity <= 1" 
+                                  class="w-8 h-8 rounded-full bg-pink-100 text-pink-500 font-bold flex items-center justify-center hover:bg-pink-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">–</button>
+                          <span class="font-medium text-gray-800 px-3 text-sm">{{ product.quantity }}</span>
+                          <button (click)="updateProductQuantity(product.product._id, product.quantity + 1)"  
+                                  [disabled]="product.quantity >= product.product.quantity" 
+                                  class="w-8 h-8 rounded-full bg-pink-100 text-pink-500 font-bold flex items-center justify-center hover:bg-pink-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">+</button>
+                        </div>
+                        
+                        <button (click)="removeProductFromCart(product.product._id)" 
+                                class="text-gray-400 hover:text-red-500 p-2 rounded-full hover:bg-red-50 transition-colors"
+                                [attr.aria-label]="'REMOVE_ITEM' | translate">
+                          <i class="fas fa-trash-alt text-sm"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+
+            <!-- Coupon Section -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mt-8 lg:mt-10"
+                 [class.sm:flex-row-reverse]="isRTL()">
+              <input 
+                type="text"
+                [placeholder]="'COUPON_PLACEHOLDER' | translate"
+                class="border border-gray-200 rounded-2xl py-3 px-4 flex-1 min-w-0 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-300 text-sm transition-all shadow-inner"
+                [class.text-right]="isRTL()"
+              />
+              <button class="bg-pink-500 text-white text-sm rounded-2xl py-3 px-6 hover:bg-pink-600 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 whitespace-nowrap flex items-center gap-2"
+                      [class.flex-row-reverse]="isRTL()">
+                <span>{{ 'APPLY_COUPON' | translate }}</span>
+                <i class="fas" [class.fa-arrow-right]="!isRTL()" [class.fa-arrow-left]="isRTL()"></i>
+              </button>
+              <button class="bg-pink-100 text-pink-500 text-sm rounded-2xl py-3 px-6 hover:bg-pink-200 transition-all duration-300 whitespace-nowrap flex items-center gap-2"
+                      [class.flex-row-reverse]="isRTL()">
+                <i class="fas" [class.fa-arrow-left]="!isRTL()" [class.fa-arrow-right]="isRTL()"></i>
+                <span>{{ 'CONTINUE_SHOPPING' | translate }}</span>
+              </button>
+            </div>
+          </div>
+
+        } @else {
+          <!-- Empty Cart State -->
+          <div class="flex flex-col justify-center items-center min-h-[300px] sm:min-h-[380px] py-12 sm:py-20">
+            <div class="text-5xl sm:text-6xl lg:text-7xl text-gray-300 mb-4">
+              <i class="fas fa-shopping-cart"></i>
+            </div>
+            <div class="text-xl sm:text-2xl font-bold text-gray-700 mb-2 text-center">
+              {{ 'CART_EMPTY' | translate }}
+            </div>
+            <div class="text-sm text-gray-400 mb-6 text-center">
+              {{ 'CART_EMPTY_DESC' | translate }}
+            </div>
+            <button
+              class="bg-pink-500 text-white rounded-full py-3 px-8 text-sm hover:bg-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center gap-2"
+              [class.flex-row-reverse]="isRTL()"
+              routerLink="/home">
+              <i class="fas fa-store"></i>
+              <span>{{ 'SHOP_NOW' | translate }}</span>
+            </button>
+          </div>
+        }
+
+      </div>
+    </div>
+
+    <!-- Right: Cart Summary -->
+    <div class="w-full max-w-sm xl:max-w-[330px] xl:min-w-[280px] mx-auto xl:mx-0 bg-pink-50 rounded-3xl p-6 lg:p-7 flex flex-col justify-between h-fit shadow-lg border border-pink-100"
+         [class.text-right]="isRTL()">
+      <h2 class="text-lg font-bold text-gray-800 mb-6 text-center">{{ 'CART_SUMMARY' | translate }}</h2>
+      
+      <div class="space-y-4 text-gray-700 text-sm mb-6">
+        <div class="flex justify-between items-center py-2 border-b border-pink-100">
+          <span>{{ 'SUBTOTAL' | translate }}:</span>
+          <span class="font-semibold">{{ 'CURRENCY' | translate }}{{ totalCartItems() }}</span>
+        </div>
+        <div class="flex justify-between items-center py-2 border-b border-pink-100">
+          <span>{{ 'SHIPPING' | translate }}:</span>
+          <span class="font-semibold text-green-600">{{ 'FREE' | translate }}</span>
+        </div>
+        <div class="flex justify-between items-center py-2 border-b border-pink-100">
+          <span>{{ 'TAX' | translate }}:</span>
+          <span class="font-semibold">{{ 'CURRENCY' | translate }}0.00</span>
+        </div>
+        <div class="flex justify-between text-pink-600 font-bold text-lg pt-4 border-t-2 border-pink-200">
+          <span>{{ 'TOTAL' | translate }}:</span>
+          <span>{{ 'CURRENCY' | translate }}{{ totalCartItems() }}</span>
+        </div>
+      </div>
+
+      <button 
+        routerLink="/shippingaddress" 
+        class="group w-full bg-pink-500 text-white rounded-3xl py-3 sm:py-4 px-6 font-medium 
+               hover:bg-pink-600 hover:shadow-xl 
+               transform transition-all duration-300 ease-in-out 
+               hover:scale-105 active:scale-95
+               focus:outline-none focus:ring-4 focus:ring-pink-300 focus:ring-offset-2
+               shadow-lg">
+        
+        <span class="flex items-center justify-center gap-2 text-sm sm:text-base"
+              [class.flex-row-reverse]="isRTL()">
+          <span>{{ 'CHECKOUT_NOW' | translate }}</span>
+          <span class="transition-transform duration-300"
+                [class.group-hover:translate-x-1]="!isRTL()"
+                [class.group-hover:-translate-x-1]="isRTL()">
+            <i class="fas" [class.fa-arrow-right]="!isRTL()" [class.fa-arrow-left]="isRTL()"></i>
+          </span>
+        </span>
+      </button>
+    </div>
+    
+  </div>
+</section>

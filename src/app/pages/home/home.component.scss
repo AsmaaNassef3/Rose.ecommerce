@@ -1,0 +1,205 @@
+.custom-carousel {
+  max-width: 100%;
+  margin: 0 auto;
+  position: relative;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(236, 72, 153, 0.10);
+
+
+
+  .carousel-img {
+    width: 100%;
+    height: 35vw;
+    min-height: 180px;
+    max-height: 350px;
+    object-fit: cover;
+    border-radius: 1rem;
+    // Removed transition animation
+  }
+  
+  ::ng-deep .owl-dots {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    .owl-dot {
+      width: 12px;
+      height: 12px;
+      margin: 0 2px;
+      background-color: #bd3281;
+      cursor: pointer;
+      display: inline-block;
+      border-radius: 50%;
+      transition: all 0.3s;
+      &.active {
+        background-color: #ec4899;
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  ::ng-deep .owl-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    .owl-prev, .owl-next {
+      background-color: rgba(236, 72, 153, 0.2);
+      color: #ec4899;
+      font-size: 24px;
+      padding: 8px 12px;
+      border-radius: 50%;
+      transition: background 0.3s;
+      &:hover {
+        background-color: #ec4899;
+        color: #fff;
+      }
+    }
+  }
+
+  // Fix spacing between carousel items
+  ::ng-deep .owl-stage-outer {
+    padding: 0 12px !important;
+  }
+
+  ::ng-deep .owl-item {
+    padding: 0 5px;
+  }
+}
+
+// Remove all animations and scale effects
+.product-card, .group {
+  transition: box-shadow 0.3s;
+  will-change: auto;
+  transform: none !important;
+}
+
+.product-card:hover, .group:hover {
+  box-shadow: 0 8px 32px 0 rgba(236, 72, 153, 0.18);
+  transform: none !important; // No scaling on hover
+}
+
+// Yellow rating stars
+.fa-star {
+  &.text-pink-400 {
+    color: #facc15 !important; // Yellow color for filled stars
+  }
+  &.text-gray-300 {
+    color: #d1d5db; // Gray for empty stars
+  }
+}
+
+// Product image wrapper with overlay icons
+.product-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+
+  img {
+    width: 100%;
+    height: 12rem;
+    object-fit: cover;
+    transition: none; // Remove image transitions
+    
+    @media (min-width: 640px) {
+      height: 14rem;
+    }
+    
+    @media (min-width: 768px) {
+      height: 16rem;
+    }
+    
+    @media (min-width: 1024px) {
+      height: 18rem;
+    }
+  }
+
+  .favorite-icon, .cart-icon {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(4px);
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #ec4899;
+    font-size: 16px;
+    z-index: 10;
+    
+    &:hover {
+      background: #ec4899;
+      color: white;
+      transform: scale(1.1);
+    }
+
+    @media (min-width: 768px) {
+      padding: 10px;
+      font-size: 18px;
+    }
+  }
+
+
+  .favorite-icon {
+    top: 12px;
+    left: 12px;
+  }
+
+
+  .cart-icon {
+    top: 12px;
+    right: 12px;
+  }
+
+  // Discount badge positioning
+  .discount-badge {
+    position: absolute;
+    top: 12px;
+    right: 50px; // Move left to make room for cart icon
+    z-index: 5;
+
+    @media (max-width: 640px) {
+      right: 45px;
+      font-size: 10px;
+      padding: 4px 8px;
+    }
+  }
+}
+
+// Responsive container adjustments
+.carousel-container {
+  padding: 0 1rem;
+  
+  @media (min-width: 640px) {
+    padding: 0 1.5rem;
+  }
+  
+  @media (min-width: 1024px) {
+    padding: 0 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-carousel .carousel-img {
+    height: 180px;
+  }
+}
+@keyframes infinite-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-infinite-scroll {
+  animation: infinite-scroll 25s linear infinite;
+}
+
+.pause {
+  animation-play-state: paused !important;
+}

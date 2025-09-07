@@ -1,0 +1,50 @@
+@if (step() === 1) {
+  <form [formGroup]="verifyEmail" (ngSubmit)="VerifyEmailSubmit()">
+   
+     
+        <div class="mb-8">
+            <input formControlName="email" type="email" id="email" class="lg:w-[410px] w-[100%] shadow-[0px 10.09px 20.18px 0px #4461F20D;]
+            rounded-custom2 border-0.99 border-[#E0E0E9] px-3 h-[55px]" placeholder="Enter your email" required />
+        </div>
+        <app-auth-btn>
+          Send Code
+        </app-auth-btn>
+ 
+  </form>
+}
+@if (step()===2) {
+  <form [formGroup]="verifyCode" (ngSubmit)="verifyCodeSubmit()"   >
+    <h3 class="font-bold text-[24.78px] leading-[100%] mb-7">
+        Verify Code
+    </h3>
+    <div class="mb-8">
+        <input formControlName="resetCode" type="text" id="email" class="w-[410px] shadow-[0px_10.09px_20.18px_0px_rgba(68,97,242,0.05)]
+  rounded-custom2 border-0.99 border-[#E0E0E9] px-3 h-[55px]" placeholder="Enter verification code" required />
+    </div>
+    <app-auth-btn>
+      Verify Code
+    </app-auth-btn>
+  </form>
+}
+@if (step()===3 ) {
+  <form  [formGroup]="verifyPass" (ngSubmit)="verifayResetPass()" >
+    <h3 class="font-bold text-[24.78px] leading-[100%] mb-7">
+        Set New Password
+    </h3>
+    <div class="mb-6">
+        <input formControlName="email" type="email"  class="lg:w-[410px] w-[100%] h-[55px] rounded-custom2 shadow-[0px_10.09px_20.18px_0px_rgba(68,97,242,0.05)]
+ px-3 border-0.99 border-[#E0E0E9]" readonly required />
+    </div>
+    <div class="mb-6">
+        <input formControlName="newPassword" type="password" id="password" class="lg:w-[410px] w-[100%] h-[55px] rounded-custom2 shadow-[0px_10.09px_20.18px_0px_rgba(68,97,242,0.05)]
+ px-3 border-0.99 border-[#E0E0E9]"  placeholder="Enter new password" required />
+ <a class="text-blue-600 cursor-pointer" (click)="backToLogin.emit()">Back to Login</a>
+
+    </div>
+    <app-auth-btn>
+      Reset Password
+    </app-auth-btn>
+  </form>
+}
+
+

@@ -1,0 +1,292 @@
+<form [formGroup]="registerForm" (ngSubmit)="registerSubmit()">
+
+  
+    <!-- First Name -->
+    <div class="mb-8 relative w-full">
+      <input
+        formControlName="firstName"
+        type="text"
+        [ngClass]="{
+          'border-[#E0E0E9]': !registerForm.get('firstName')?.touched,
+          'border-red-500 focus:border-red-500': registerForm.get('firstName')?.touched && registerForm.get('firstName')?.invalid,
+          'border-green-500 focus:border-green-500': registerForm.get('firstName')?.touched && registerForm.get('firstName')?.valid
+        }"
+        class="lg:w-[410px] w-full shadow-[0px_10.09px_20.18px_0px_rgba(68,97,242,0.05)] rounded-custom2 border-0.99 px-3 h-[55px] pr-12 focus:outline-none transition-colors duration-200"
+        placeholder="First Name"
+        required
+      />
+      @if (registerForm.get('firstName')?.touched) {
+        @if (registerForm.get('firstName')?.hasError('required')) {
+          <div class="flex items-center p-2 pe-1 mb-2 text-xs text-red-800 rounded-custom2 bg-red-50 border border-red-300 lg:w-[410px] w-full" style="height:38px;">
+            <svg class="shrink-0 inline w-3 h-3 me-2 text-red-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="font-medium">Error!</span> First name is required
+          </div>
+        }
+        @if (registerForm.get('firstName')?.hasError('pattern') && !registerForm.get('firstName')?.hasError('required')) {
+          <div class="flex items-center p-2 pe-1 mb-2 text-xs text-yellow-800 rounded-custom2 bg-yellow-50 border border-yellow-300 lg:w-[410px] w-full" style="height:38px;">
+            <svg class="shrink-0 inline w-3 h-3 me-2 text-yellow-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="font-medium">Warning!</span> First name pattern invalid
+          </div>
+        }
+        @if (registerForm.get('firstName')?.valid) {
+          <div class="flex items-center p-2 pe-1 mb-2 text-xs text-green-800 rounded-custom2 bg-green-50 border border-green-300 lg:w-[410px] w-full" style="height:38px;">
+            <svg class="shrink-0 inline w-3 h-3 me-2 text-green-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="font-medium">Success!</span> First name looks good
+          </div>
+        }
+      }
+    </div>
+    <!-- Last Name -->
+    <div class="mb-8 relative w-full">
+      <input
+        formControlName="lastName"
+        type="text"
+        [ngClass]="{
+          'border-[#E0E0E9]': !registerForm.get('lastName')?.touched,
+          'border-red-500 focus:border-red-500': registerForm.get('lastName')?.touched && registerForm.get('lastName')?.invalid,
+          'border-green-500 focus:border-green-500': registerForm.get('lastName')?.touched && registerForm.get('lastName')?.valid
+        }"
+        class="lg:w-[410px] w-full shadow-[0px_10.09px_20.18px_0px_rgba(68,97,242,0.05)] rounded-custom2 border-0.99 px-3 h-[55px] pr-12 focus:outline-none transition-colors duration-200"
+        placeholder="Last Name"
+        required
+      />
+      @if (registerForm.get('lastName')?.touched) {
+        @if (registerForm.get('lastName')?.hasError('required')) {
+          <div class="flex items-center p-2 pe-1 mb-2 text-xs text-red-800 rounded-custom2 bg-red-50 border border-red-300 lg:w-[410px] w-full" style="height:38px;">
+            <svg class="shrink-0 inline w-3 h-3 me-2 text-red-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="font-medium">Error!</span> Last name is required
+          </div>
+        }
+        @if (registerForm.get('lastName')?.hasError('pattern') && !registerForm.get('lastName')?.hasError('required')) {
+          <div class="flex items-center p-2 pe-1 mb-2 text-xs text-yellow-800 rounded-custom2 bg-yellow-50 border border-yellow-300 lg:w-[410px] w-full" style="height:38px;">
+            <svg class="shrink-0 inline w-3 h-3 me-2 text-yellow-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="font-medium">Warning!</span> Last name pattern invalid
+          </div>
+        }
+        @if (registerForm.get('lastName')?.valid) {
+          <div class="flex items-center p-2 pe-1 mb-2 text-xs text-green-800 rounded-custom2 bg-green-50 border border-green-300 lg:w-[410px] w-full" style="height:38px;">
+            <svg class="shrink-0 inline w-3 h-3 me-2 text-green-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="font-medium">Success!</span> Last name looks good
+          </div>
+        }
+      }
+    </div>
+    <!-- Email -->
+    <div class="mb-8 relative w-full">
+      <input
+        formControlName="email"
+        type="email"
+        [ngClass]="{
+          'border-[#E0E0E9]': !registerForm.get('email')?.touched,
+          'border-red-500 focus:border-red-500': registerForm.get('email')?.touched && registerForm.get('email')?.invalid,
+          'border-green-500 focus:border-green-500': registerForm.get('email')?.touched && registerForm.get('email')?.valid
+        }"
+        class="lg:w-[410px] w-full shadow-[0px_10.09px_20.18px_0px_rgba(68,97,242,0.05)] rounded-custom2 border-0.99 px-3 h-[55px] pr-12 focus:outline-none transition-colors duration-200"
+        placeholder="Email"
+        required
+      />
+      @if (registerForm.get('email')?.touched) {
+        @if (registerForm.get('email')?.hasError('required')) {
+          <div class="flex items-center p-2 pe-1 mb-2 text-xs text-red-800 rounded-custom2 bg-red-50 border border-red-300 lg:w-[410px] w-full" style="height:38px;">
+            <svg class="shrink-0 inline w-3 h-3 me-2 text-red-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="font-medium">Error!</span> Email is required
+          </div>
+        }
+        @if (registerForm.get('email')?.hasError('email') && !registerForm.get('email')?.hasError('required')) {
+          <div class="flex items-center p-2 pe-1 mb-2 text-xs text-yellow-800 rounded-custom2 bg-yellow-50 border border-yellow-300 lg:w-[410px] w-full" style="height:38px;">
+            <svg class="shrink-0 inline w-3 h-3 me-2 text-yellow-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="font-medium">Warning!</span> Please enter a valid email
+          </div>
+        }
+        @if (registerForm.get('email')?.valid) {
+          <div class="flex items-center p-2 pe-1 mb-2 text-xs text-green-800 rounded-custom2 bg-green-50 border border-green-300 lg:w-[410px] w-full" style="height:38px;">
+            <svg class="shrink-0 inline w-3 h-3 me-2 text-green-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="font-medium">Success!</span> Email looks good
+          </div>
+        }
+      }
+    </div>
+    <!-- Password -->
+    <div class="mb-6 relative w-full">
+      <input
+        formControlName="password"
+        type="password"
+        [ngClass]="{
+          'border-[#E0E0E9]': !registerForm.get('password')?.touched,
+          'border-red-500 focus:border-red-500': registerForm.get('password')?.touched && registerForm.get('password')?.invalid,
+          'border-green-500 focus:border-green-500': registerForm.get('password')?.touched && registerForm.get('password')?.valid
+        }"
+        class="lg:w-[410px] w-full shadow-[0px_10.09px_20.18px_0px_rgba(68,97,242,0.05)] rounded-custom2 border-0.99 px-3 h-[55px] pr-12 focus:outline-none transition-colors duration-200"
+        placeholder="Password"
+        required
+      />
+      @if (registerForm.get('password')?.touched) {
+        @if (registerForm.get('password')?.hasError('required')) {
+          <div class="flex items-center p-2 pe-1 mb-2 text-xs text-red-800 rounded-custom2 bg-red-50 border border-red-300 lg:w-[410px] w-full" style="height:38px;">
+            <svg class="shrink-0 inline w-3 h-3 me-2 text-red-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="font-medium">Error!</span> Password is required
+          </div>
+        }
+        @if (registerForm.get('password')?.hasError('pattern') && !registerForm.get('password')?.hasError('required')) {
+          <div class="flex items-center p-2 pe-1 mb-2 text-xs text-yellow-800 rounded-custom2 bg-yellow-50 border border-yellow-300 lg:w-[410px] w-full" style="height:38px;">
+            <svg class="shrink-0 inline w-3 h-3 me-2 text-yellow-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="font-medium">Warning!</span> Password must be strong
+          </div>
+        }
+        @if (registerForm.get('password')?.valid) {
+          <div class="flex items-center p-2 pe-1 mb-2 text-xs text-green-800 rounded-custom2 bg-green-50 border border-green-300 lg:w-[410px] w-full" style="height:38px;">
+            <svg class="shrink-0 inline w-3 h-3 me-2 text-green-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="font-medium">Success!</span> Password looks good
+          </div>
+        }
+      }
+    </div>
+    <!-- Confirm Password -->
+    <div class="mb-6 relative w-full">
+      <input
+        formControlName="rePassword"
+        type="password"
+        [ngClass]="{
+          'border-[#E0E0E9]': !registerForm.get('rePassword')?.touched,
+          'border-red-500 focus:border-red-500': registerForm.get('rePassword')?.touched && registerForm.get('rePassword')?.invalid,
+          'border-green-500 focus:border-green-500': registerForm.get('rePassword')?.touched && registerForm.get('rePassword')?.valid
+        }"
+        class="lg:w-[410px] w-full shadow-[0px_10.09px_20.18px_0px_rgba(68,97,242,0.05)] rounded-custom2 border-0.99 px-3 h-[55px] pr-12 focus:outline-none transition-colors duration-200"
+        placeholder="Confirm Password"
+        required
+      />
+      @if (registerForm.get('rePassword')?.touched) {
+        @if (registerForm.get('rePassword')?.hasError('required')) {
+          <div class="flex items-center p-2 pe-1 mb-2 text-xs text-red-800 rounded-custom2 bg-red-50 border border-red-300 lg:w-[410px] w-full" style="height:38px;">
+            <svg class="shrink-0 inline w-3 h-3 me-2 text-red-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="font-medium">Error!</span> Confirm password is required
+          </div>
+        }
+        @if (registerForm.get('rePassword')?.hasError('pattern') && !registerForm.get('rePassword')?.hasError('required')) {
+          <div class="flex items-center p-2 pe-1 mb-2 text-xs text-yellow-800 rounded-custom2 bg-yellow-50 border border-yellow-300 lg:w-[410px] w-full" style="height:38px;">
+            <svg class="shrink-0 inline w-3 h-3 me-2 text-yellow-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="font-medium">Warning!</span> Confirm password pattern invalid
+          </div>
+        }
+        @if (registerForm.hasError('misMatch') && registerForm.get('rePassword')?.touched && !registerForm.get('rePassword')?.hasError('required')) {
+          <div class="flex items-center p-2 pe-1 mb-2 text-xs text-red-800 rounded-custom2 bg-red-50 border border-red-300 lg:w-[410px] w-full" style="height:38px;">
+            <svg class="shrink-0 inline w-3 h-3 me-2 text-red-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="font-medium">Error!</span> Passwords do not match
+          </div>
+        }
+        @if (registerForm.get('rePassword')?.valid && !registerForm.hasError('misMatch')) {
+          <div class="flex items-center p-2 pe-1 mb-2 text-xs text-green-800 rounded-custom2 bg-green-50 border border-green-300 lg:w-[410px] w-full" style="height:38px;">
+            <svg class="shrink-0 inline w-3 h-3 me-2 text-green-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="font-medium">Success!</span> Confirm password looks good
+          </div>
+        }
+      }
+    </div>
+    <!-- Phone -->
+    <div class="mb-6 relative w-full">
+      <input
+        formControlName="phone"
+        type="text"
+        [ngClass]="{
+          'border-[#E0E0E9]': !registerForm.get('phone')?.touched,
+          'border-red-500 focus:border-red-500': registerForm.get('phone')?.touched && registerForm.get('phone')?.invalid,
+          'border-green-500 focus:border-green-500': registerForm.get('phone')?.touched && registerForm.get('phone')?.valid
+        }"
+        class="lg:w-[410px] w-full shadow-[0px_10.09px_20.18px_0px_rgba(68,97,242,0.05)] rounded-custom2 border-0.99 px-3 h-[55px] pr-12 focus:outline-none transition-colors duration-200"
+        placeholder="Phone"
+        required
+      />
+      @if (registerForm.get('phone')?.touched) {
+        @if (registerForm.get('phone')?.hasError('required')) {
+          <div class="flex items-center p-2 pe-1 mb-2 text-xs text-red-800 rounded-custom2 bg-red-50 border border-red-300 lg:w-[410px] w-full" style="height:38px;">
+            <svg class="shrink-0 inline w-3 h-3 me-2 text-red-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="font-medium">Error!</span> Phone is required
+          </div>
+        }
+        @if (registerForm.get('phone')?.hasError('pattern') && !registerForm.get('phone')?.hasError('required')) {
+          <div class="flex items-center p-2 pe-1 mb-2 text-xs text-yellow-800 rounded-custom2 bg-yellow-50 border border-yellow-300 lg:w-[410px] w-full" style="height:38px;">
+            <svg class="shrink-0 inline w-3 h-3 me-2 text-yellow-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="font-medium">Warning!</span> Phone pattern invalid
+          </div>
+        }
+        @if (registerForm.get('phone')?.valid) {
+          <div class="flex items-center p-2 pe-1 mb-2 text-xs text-green-800 rounded-custom2 bg-green-50 border border-green-300 lg:w-[410px] w-full" style="height:38px;">
+            <svg class="shrink-0 inline w-3 h-3 me-2 text-green-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="font-medium">Success!</span> Phone looks good
+          </div>
+        }
+
+
+
+
+
+
+   
+      }
+    </div>
+
+
+    <div class="mb-6 relative w-full">
+      <label class="block text-gray-700 text-sm font-bold mb-2">Gender</label>
+      <div class="flex items-center">
+        <input type="radio" formControlName="gender" value="male" id="male" class="mr-2">
+        <label for="male" class="mr-4">Male</label>
+        <input type="radio" formControlName="gender" value="female" id="female" class="mr-2">
+        <label for="female">Female</label>
+      </div>
+      @if (registerForm.get('gender')?.touched && registerForm.get('gender')?.hasError('required')) {
+        <div class="flex items-center p-2 pe-1 mb-2 text-xs text-pink-500 rounded-custom2 bg-red-50 border border-red-300 lg:w-[410px] w-full" style="height:38px;">
+          <svg class="shrink-0 inline w-3 h-3 me-2 text-pink-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+          </svg>
+          <span class="font-medium">Error!</span> Gender is required
+        </div>
+      }
+    </div>
+
+
+   
+  
+    <app-auth-btn>
+      Register
+    </app-auth-btn>
+
+</form>

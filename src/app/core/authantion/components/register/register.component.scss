@@ -1,0 +1,44 @@
+.register-form-input {
+  border: 1px solid #E0E0E9;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0px 10.09px 20.18px 0px rgba(255,105,180,0.05);
+  border-radius: 12px;
+  background: #fff;
+  color: #222;
+}
+.register-form-input:focus {
+  border-color: #FF69B4;
+  box-shadow: 0 0 0 2px rgba(255,105,180,0.10);
+}
+.register-form-input.ng-touched.ng-invalid {
+  border-color: #ef4444 !important;
+}
+.register-form-input.ng-touched.ng-valid {
+  border-color: #22c55e !important;
+}
+
+/* Responsive width for all inputs */
+.register-form-input {
+  width: 100%;
+  max-width: 410px;
+  height: 55px;
+  padding: 0 12px;
+  font-size: 1rem;
+}
+
+/* Remove browser autofill yellow */
+.register-form-input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #fff inset;
+  box-shadow: 0 0 0 1000px #fff inset;
+  -webkit-text-fill-color: #222;
+}
+
+/* Style for error, warning, and success messages (optional, for compact look) */
+.register-form-message {
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
