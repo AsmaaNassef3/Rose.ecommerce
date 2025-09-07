@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import * as ProductsActions from '../../store/products/products.actions';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { CategoriesService } from '../../core/services/categories/categories.service';
-import { selectSelectedCategories } from '../../store/products/product.selector';
+import { selectSelectedCategories, selectPriceRange } from '../../store/products/product.selector';
 import { TranslationService } from '../../core/services/translate/traslation.service';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -15,7 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
   standalone: true,
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
-  imports: [ReactiveFormsModule, CurrencyPipe,TranslateModule],
+  imports: [ReactiveFormsModule, CurrencyPipe, TranslateModule],
 })
 export class SidebarComponent implements OnInit {
   private drawer!: Drawer;
@@ -26,7 +26,7 @@ export class SidebarComponent implements OnInit {
 
   categories: any[] = [];
   categoriesSelected: string[] = [];
-  private readonly translateService = inject(TranslationService)
+  private readonly translateService = inject(TranslationService);
   private categoriesService = inject(CategoriesService);
 
   constructor(
@@ -44,7 +44,6 @@ export class SidebarComponent implements OnInit {
       const backdropEl = document.getElementById('sidebar-backdrop');
       
       if (sidebarEl) {
-        // Custom drawer implementation for better mobile control
         this.initializeDrawer(sidebarEl, backdropEl);
       }
     }
@@ -56,7 +55,7 @@ export class SidebarComponent implements OnInit {
 
     // Price Filter Form
     this.priceForm = this.fb.group({
-      max: new FormControl(100000),
+      max: new FormControl(100),
     });
 
     // Dispatch search term

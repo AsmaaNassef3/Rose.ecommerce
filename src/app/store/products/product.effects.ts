@@ -1,11 +1,11 @@
+
 import { Injectable, inject } from '@angular/core';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
 import * as ProductsActions from './products.actions';
 import { ProductsService } from '../../core/services/services/products.service';
-import { catchError, map, of, switchMap, withLatestFrom, tap } from 'rxjs';
+import { catchError, map, of, switchMap, withLatestFrom } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectProductsState } from './product.selector';
-import { ProductsState } from './products.initalstate';
 
 @Injectable()
 export class ProductsEffects {
@@ -13,7 +13,6 @@ export class ProductsEffects {
   private productService = inject(ProductsService);
   private store = inject(Store);
 
- 
   loadProducts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ProductsActions.loadProducts),
@@ -33,7 +32,6 @@ export class ProductsEffects {
       )
     )
   );
-
 
   searchProducts$ = createEffect(() =>
     this.actions$.pipe(
@@ -55,7 +53,6 @@ export class ProductsEffects {
     )
   );
 
-
   updateSelectedCategories$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ProductsActions.updateSelectedCategories),
@@ -75,7 +72,6 @@ export class ProductsEffects {
       )
     )
   );
-
 
   updatePriceRange$ = createEffect(() =>
     this.actions$.pipe(

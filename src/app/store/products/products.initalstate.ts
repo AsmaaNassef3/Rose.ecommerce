@@ -6,9 +6,9 @@ export interface ProductsState {
   totalPages: number;
   totalItems: number;
   isLoading: boolean;
-searchTerm: string;
+  searchTerm: string;
   selectedCategories: string[];
-     priceRange: { min: number | null; max: number | null };
+  priceRange: { min: number | null; max: number | null };
   error: string | null;
 }
 
@@ -19,8 +19,7 @@ export const initialProductsState: ProductsState = {
   totalItems: 0,
   isLoading: false,
   error: null,
-    searchTerm: '',
-      selectedCategories: [],
-     priceRange: { min: null, max: null },
+  searchTerm: '',
+  selectedCategories: [],
+  priceRange: { min: null, max: null },
 };
-
