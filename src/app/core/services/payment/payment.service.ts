@@ -16,7 +16,7 @@ export class PaymentService {
 
   checkoutOrder(orderData: any): Observable<any> {
     const currentUrl = window.location.origin;
-    return this.httpClient.post(`${environment.baseUrl}api/v1/orders/checkout?url=${currentUrl}/allOrders`, orderData);
+    return this.httpClient.post(`${environment.baseUrl}api/v1/orders/checkout?url=${currentUrl}`, orderData);
   }
 
   getUserOrders(): Observable<any> {
