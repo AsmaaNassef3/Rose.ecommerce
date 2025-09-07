@@ -168,7 +168,7 @@ export class UserdataloginComponent implements OnInit {
       next: (res) => {
         console.log('Account logged out successfully:', res);
         if (isPlatformBrowser(this.platformId)) {
-            this.tokenService.clearToken();
+            // this.tokenService.clearToken();
         }
         setTimeout(() => {
           this.router.navigate(['/home']);

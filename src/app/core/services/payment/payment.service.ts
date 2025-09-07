@@ -8,18 +8,21 @@ import { Observable } from 'rxjs';
 })
 export class PaymentService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient : HttpClient) { }
 
-  createCashOrder(orderData: any): Observable<any> {
-    return this.httpClient.post(`${environment.baseUrl}api/v1/orders`, orderData);
-  }
+createCashOrder(orderData: any): Observable<any> {
+  return this.httpClient.post(`${environment.baseUrl}api/v1/orders`, orderData);
+}
+
 
   checkoutOrder(orderData: any): Observable<any> {
     const currentUrl = window.location.origin;
     return this.httpClient.post(`${environment.baseUrl}api/v1/orders/checkout?url=${currentUrl}`, orderData);
   }
 
-  getUserOrders(): Observable<any> {
-    return this.httpClient.get(`${environment.baseUrl}api/v1/orders`);
-  }
+getUserOrders(): Observable<any> {      
+  return this.httpClient.get(`${environment.baseUrl}api/v1/orders`);
+
+}
+
 }
